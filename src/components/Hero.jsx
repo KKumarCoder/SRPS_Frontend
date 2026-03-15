@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, MapPin, Sparkles } from "lucide-react";
 
 /* ── Image paths ── */
 const SLIDES = [
   {
     src: "/School_pic/NCC_Pic_Primnester_29.JPEG",
-    caption: "NCC Leadership Camp",
+   
   },
-  { src: "/School_pic/IMG_31.JPG", caption: "School Campus" },
-  { src: "/School_pic/NCC_Pic_35.JPEG", caption: "Parade Ground" },
-  { src: "/School_pic/NCC_Pic_Primenester_30.JPG", caption: "Annual Function" },
-  { src: "/School_pic/NCC-Pic_39.JPG", caption: "Sports Day" },
+  { src: "/School_pic/IMG_31.JPG",  },
+  { src: "/School_pic/NCC_Pic_35.JPEG",},
+  { src: "/School_pic/NCC_Pic_Primenester_30.JPG",  },
+  { src: "/School_pic/NCC-Pic_39.JPG",  },
 ];
 
 /* ── Stats ── */
@@ -23,28 +23,69 @@ const STATS = [
   { num: "50+", label: "Activities" },
 ];
 
+/* ── Rotating Typed Word Component ── */
+const TypedRotatingWord = () => {
+  const words = ["Leaders", "Innovators", "Champions", "Dreamers"];
+  const [wordIndex, setWordIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [delta, setDelta] = useState(200); // ms per character
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    const tick = () => {
+      const fullWord = words[wordIndex];
+      let updatedText = isDeleting
+        ? fullWord.substring(0, text.length - 1)
+        : fullWord.substring(0, text.length + 1);
+
+      setText(updatedText);
+
+      if (!isDeleting && updatedText === fullWord) {
+        // Word complete – pause then start deleting
+        setDelta(2000);
+        setIsDeleting(true);
+      } else if (isDeleting && updatedText === "") {
+        // Deleted completely – move to next word
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % words.length);
+        setDelta(200);
+      } else {
+        // Adjust speed: delete faster than type
+        setDelta(isDeleting ? 100 : 200);
+      }
+    };
+
+    timeoutRef.current = setTimeout(tick, delta);
+    return () => clearTimeout(timeoutRef.current);
+  }, [text, wordIndex, isDeleting, delta, words]);
+
+  return (
+    <span className="relative inline-flex items-center">
+      <span>{text}</span>
+      <span className="ml-0.5 w-0.5 h-7 bg-amber-400 animate-pulse" />
+    </span>
+  );
+};
+
 export default function Hero() {
   const [idx, setIdx] = useState(0);
 
-  /* Auto-advance */
+  // Auto-advance slides
   useEffect(() => {
     const t = setInterval(() => {
       setIdx((i) => (i + 1) % SLIDES.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(t);
   }, []);
 
   return (
-    <section
-      className="relative w-full overflow-hidden"
-      style={{
-        height: "100vh",
-        minHeight: "620px",
-        fontFamily: "'Outfit','Nunito',sans-serif",
-      }}
-    >
+    <section className="relative w-full min-h-[760px] overflow-hidden bg-slate-950 font-outfit">
+      {/* Custom keyframes & global styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+        .font-outfit { font-family: 'Outfit', sans-serif; }
 
         /* Slide crossfade */
         .hero-slide {
@@ -53,461 +94,232 @@ export default function Hero() {
           object-fit: cover; object-position: center;
         }
 
-        /* Diagonal strip keyframe */
-        @keyframes stripSlide {
-          0%   { transform: translateX(-110%) skewX(-12deg); opacity: 0; }
-          15%  { opacity: 1; }
-          85%  { opacity: 1; }
-          100% { transform: translateX(110vw) skewX(-12deg); opacity: 0; }
+        /* Floating animation for decorative shapes */
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
         }
 
-        /* Entrance animations */
-        @keyframes fadeUp {
-          from { opacity:0; transform: translateY(32px); }
-          to   { opacity:1; transform: translateY(0); }
-        }
-        @keyframes fadeLeft {
-          from { opacity:0; transform: translateX(-28px); }
-          to   { opacity:1; transform: translateX(0); }
-        }
-        @keyframes widthIn {
-          from { width:0; opacity:0; }
-          to   { width:56px; opacity:1; }
-        }
-
-        .anim-up   { animation: fadeUp  0.8s cubic-bezier(.22,1,.36,1) both; }
-        .anim-left { animation: fadeLeft 0.7s cubic-bezier(.22,1,.36,1) both; }
-
-        /* Shine on primary button */
-        .btn-primary {
-          position: relative;
-          overflow: hidden;
-        }
-        .btn-primary::after {
-          content: '';
-          position: absolute;
-          top: 0; left: -80%;
-          width: 60%; height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
-          transform: skewX(-20deg);
-          transition: left 0.65s ease;
-        }
-        .btn-primary:hover::after { left: 160%; }
-
-        /* Dot indicators */
-        .dot { transition: all 0.35s ease; }
-        .dot.active { background: #f59e0b; width: 28px !important; border-radius: 4px; }
-
-        /* Caption tag */
-        @keyframes tagIn {
-          from { opacity:0; transform:translateY(8px); }
-          to   { opacity:1; transform:translateY(0); }
-        }
-
-        /* Progress bar on active slide dot */
+        /* Smooth width expansion for active dot */
         @keyframes dotProgress {
           from { width: 0%; }
-          to   { width: 100%; }
+          to { width: 100%; }
+        }
+
+        /* Glow pulse for stats */
+        @keyframes softGlow {
+          0%, 100% { filter: drop-shadow(0 0 5px rgba(245,158,11,0.3)); }
+          50% { filter: drop-shadow(0 0 15px rgba(245,158,11,0.6)); }
         }
       `}</style>
 
       {/* ════════════════════════════════
-          BACKGROUND IMAGES — full bleed
+          NOISE TEXTURE (subtle grain)
+      ════════════════════════════════ */}
+      <div
+        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.03] mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* ════════════════════════════════
+          BACKGROUND IMAGES with enhanced overlay
       ════════════════════════════════ */}
       <div className="absolute inset-0 z-0">
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           <motion.img
             key={idx}
             src={SLIDES[idx].src}
             alt={SLIDES[idx].caption}
             className="hero-slide"
-            initial={{ opacity: 0, scale: 1.04 }}
+            initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
+            transition={{ duration: 1.4, ease: [0.25, 1, 0.5, 1] }}
           />
         </AnimatePresence>
 
-        {/* ── Overlay: VERY light — only bottom-left darkening for text legibility ── */}
-        {/* Right 50% of image stays near-pristine */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              linear-gradient(
-                105deg,
-                rgba(5,10,30,0.72) 0%,
-                rgba(5,10,30,0.52) 38%,
-                rgba(5,10,30,0.10) 62%,
-                rgba(5,10,30,0.04) 100%
-              )
-            `,
-          }}
-        />
-        {/* Very subtle bottom vignette only */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-32"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(5,10,30,0.55) 0%, transparent 100%)",
-          }}
-        />
+        {/* Multi-layer gradient overlay for depth and readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(245,158,11,0.15)_0%,_transparent_70%)]" />
       </div>
 
-      {/* ════════════════════════════════==============================
-          DIAGONAL ACCENT STRIP  — sweeps left → right on each slide change ════════════════════════════════ */}
-      <AnimatePresence>
+      {/* ════════════════════════════════
+          DECORATIVE FLOATING SHAPES (curves & blobs)
+      ════════════════════════════════ */}
+      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
         <motion.div
-          key={`strip-${idx}`}
-          initial={{ x: "-110%", skewX: "-12deg", opacity: 0 }}
-          animate={{ x: "110vw", skewX: "-12deg", opacity: [0, 1, 1, 0] }}
-          transition={{
-            duration: 1.6,
-            ease: "easeInOut",
-            times: [0, 0.12, 0.88, 1],
-          }}
-          className="absolute inset-y-0 z-[5] pointer-events-none"
-          style={{
-            width: "180px",
-            background:
-              "linear-gradient(90deg, transparent, rgba(245,158,11,0.22), rgba(249,115,22,0.18), transparent)",
-          }}
+          animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-amber-500/5 blur-3xl"
         />
-      </AnimatePresence>
+        <motion.div
+          animate={{ y: [0, 20, 0], rotate: [0, -5, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-10 -left-20 w-96 h-96 rounded-full bg-orange-500/5 blur-3xl"
+        />
+        {/* Curved line accent */}
+        <svg
+          className="absolute bottom-0 left-0 w-full h-24 text-amber-500/10 fill-current"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+        >
+          <path d="M0,120 C480,20 960,20 1440,120 L1440,120 L0,120 Z" />
+        </svg>
+      </div>
 
       {/* ════════════════════════════════
-          LEFT CONTENT PANEL
+          MAIN CONTENT (left aligned)
       ════════════════════════════════ */}
-      <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-16 lg:px-20 max-w-2xl">
-        {/* ── HEADING ── */}
-        <motion.h1
-          initial={{ opacity: 0, y: 36 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            fontSize: "clamp(2.4rem, 6vw, 4.4rem)",
-            fontWeight: "900",
-            lineHeight: "1.06",
-            color: "#ffffff",
-            letterSpacing: "-1px",
-            textShadow: "0 2px 24px rgba(0,0,0,0.4)",
-          }}
-        >
-          Shaping{" "}
-          <span
-            style={{
-              background: "linear-gradient(90deg, #fbbf24 10%, #f97316 90%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              position: "relative",
-            }}
+      <div className="relative z-10 h-full flex items-center px-6 md:px-16 lg:px-24 max-w-3xl">
+        <div className="w-full mt-10">
+       
+
+          {/* Headline with animated underline + typing effect */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] text-white"
           >
-            Tomorrow's
-            {/* underline squiggle */}
-            <svg
-              style={{
-                position: "absolute",
-                bottom: "-6px",
-                left: 0,
-                width: "100%",
-              }}
-              viewBox="0 0 240 10"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M2 7 Q60 2 120 7 Q180 12 238 7"
-                stroke="#f97316"
-                strokeWidth="2.5"
-                strokeLinecap="round"
+            Shaping{" "}
+            <span className="relative inline-block bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent">
+              Tomorrow's
+              <svg
+                className="absolute -bottom-2 left-0 w-full"
+                viewBox="0 0 240 12"
                 fill="none"
-                opacity="0.75"
-              />
-            </svg>
-          </span>
-          <br />
-          Leaders Today.
-        </motion.h1>
-
-        {/* ── SUBHEADING ── */}
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.48, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            marginTop: "20px",
-            fontSize: "clamp(0.95rem, 1.8vw, 1.15rem)",
-            color: "rgba(255,255,255,0.88)",
-            lineHeight: "1.7",
-            maxWidth: "480px",
-            fontWeight: "400",
-          }}
-        >
-          Shree Ram Public School — where{" "}
-          <span style={{ color: "#fcd34d", fontWeight: "600" }}>
-            Atal Tinkering Labs
-          </span>
-          , world-class sports, and academic excellence meet to build confident
-          leaders.
-        </motion.p>
-
-        {/* ── BUTTONS ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.62, duration: 0.7 }}
-          style={{
-            marginTop: "36px",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "14px",
-            alignItems: "center",
-          }}
-        >
-          {/* Primary */}
-          <Link
-            to="/admissions"
-            className="btn-primary"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "10px",
-              padding: "14px 30px",
-              borderRadius: "14px",
-              fontWeight: "800",
-              fontSize: "15px",
-              color: "#0a0f1e",
-              background: "linear-gradient(135deg, #fbbf24 0%, #f97316 100%)",
-              boxShadow: "0 6px 30px rgba(251,191,36,0.45)",
-              textDecoration: "none",
-              transition: "transform 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.04)";
-              e.currentTarget.style.boxShadow =
-                "0 10px 40px rgba(251,191,36,0.6)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1)";
-              e.currentTarget.style.boxShadow =
-                "0 6px 30px rgba(251,191,36,0.45)";
-            }}
-          >
-            Enroll Your Child
-            <ArrowRight size={17} />
-          </Link>
-
-          {/* Secondary */}
-          <Link
-            to="/campus"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "10px",
-              padding: "13px 28px",
-              borderRadius: "14px",
-              fontWeight: "700",
-              fontSize: "15px",
-              color: "rgba(255,255,255,0.92)",
-              background: "rgba(255,255,255,0.08)",
-              border: "1.5px solid rgba(255,255,255,0.25)",
-              backdropFilter: "blur(12px)",
-              textDecoration: "none",
-              transition: "background 0.2s, border-color 0.2s, transform 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.16)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)";
-              e.currentTarget.style.transform = "scale(1.03)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
-              e.currentTarget.style.transform = "scale(1)";
-            }}
-          >
-            Explore Campus
-            <svg
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </Link>
-        </motion.div>
-
-        {/* ── STATS ROW ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.82, duration: 0.8 }}
-          style={{
-            marginTop: "44px",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "28px 36px",
-          }}
-        >
-          {STATS.map((s, i) => (
-            <div key={i} style={{ position: "relative" }}>
-              {i > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    left: "-18px",
-                    top: "4px",
-                    bottom: "4px",
-                    width: "1px",
-                    background: "rgba(255,255,255,0.15)",
-                  }}
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M2 8 Q60 2 120 8 Q180 14 238 8"
+                  stroke="url(#gradient)"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.9"
                 />
-              )}
-              <p
-                style={{
-                  fontSize: "clamp(1.5rem, 3vw, 2rem)",
-                  fontWeight: "900",
-                  background: "linear-gradient(90deg,#fbbf24,#f97316)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  lineHeight: 1,
-                }}
+                <defs>
+                  <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#fbbf24" />
+                    <stop offset="100%" stopColor="#f97316" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+            <br />
+            <TypedRotatingWord /> Today.
+          </motion.h1>
+
+          {/* Subheading */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 0.7 }}
+            className="mt-6 text-lg md:text-xl text-white/80 max-w-xl leading-relaxed"
+          >
+            Shree Ram Public School — where{" "}
+            <span className="text-amber-300 font-semibold">
+              Atal Tinkering Labs
+            </span>
+            , world-class sports, and academic excellence meet to build
+            confident leaders.
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.7 }}
+            className="mt-10 flex flex-wrap gap-4"
+          >
+            <Link
+              to="/admissions"
+              className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 font-bold text-slate-900 shadow-lg shadow-amber-600/30 transition-all hover:shadow-xl hover:shadow-amber-600/40 hover:scale-105 active:scale-100"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Enroll Your Child
+                <ArrowRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </span>
+              <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
+            </Link>
+
+            <Link
+              to="/campus"
+              className="group rounded-2xl border border-white/30 bg-white/10 backdrop-blur-md px-8 py-4 font-semibold text-white transition-all hover:bg-white/20 hover:border-white/50 hover:scale-105"
+            >
+              <span className="flex items-center gap-2">
+                Explore Campus
+                <MapPin
+                  size={18}
+                  className="transition-transform group-hover:rotate-12"
+                />
+              </span>
+            </Link>
+          </motion.div>
+
+          {/* Stats with modern cards */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.65, duration: 0.8 }}
+            className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8"
+          >
+            {STATS.map((stat, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -5 }}
+                className="relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 text-center"
               >
-                {s.num}
-              </p>
-              <p
-                style={{
-                  color: "rgba(255,255,255,0.7)",
-                  fontSize: "12px",
-                  marginTop: "4px",
-                  fontWeight: "500",
-                  letterSpacing: "0.3px",
-                }}
-              >
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </motion.div>
+                <p className="text-3xl md:text-4xl font-black bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent">
+                  {stat.num}
+                </p>
+                <p className="text-white/60 text-sm uppercase tracking-wider mt-1">
+                  {stat.label}
+                </p>
+                {/* subtle glow on hover */}
+                <div className="absolute inset-0 rounded-2xl bg-amber-500/0 hover:bg-amber-500/5 transition-colors" />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
       {/* ════════════════════════════════
-          BOTTOM BAR — slide controls + caption
+          SCROLL INDICATOR (bouncing mouse)
       ════════════════════════════════ */}
-      <div
-        className="absolute bottom-0 left-0 right-0 z-20"
-        style={{
-          padding: "16px 24px 20px",
-          background:
-            "linear-gradient(to top, rgba(5,10,30,0.75) 0%, transparent 100%)",
-          display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-          gap: "16px",
-        }}
-      >
-        {/* Slide caption */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/60">
+        <span className="text-xs uppercase tracking-widest">Scroll</span>
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+          <div className="w-1 h-2 bg-white/60 rounded-full mt-2 animate-bounce" />
+        </div>
+      </div>
+
+      {/* ════════════════════════════════
+          TOP RIGHT: large slide number (decorative)
+      ════════════════════════════════ */}
+      <div className="absolute top-8 right-8 z-20 text-right select-none">
         <AnimatePresence mode="wait">
           <motion.div
             key={idx}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.4 }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              background: "rgba(255,255,255,0.08)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(255,255,255,0.15)",
-              borderRadius: "999px",
-              padding: "5px 14px",
-            }}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5 }}
+            className="text-8xl font-black text-white/5"
           >
-            <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: "#f59e0b",
-                display: "inline-block",
-                flexShrink: 0,
-              }}
-            />
-            <span
-              style={{
-                fontSize: "12px",
-                color: "rgba(255,255,255,0.85)",
-                fontWeight: "600",
-              }}
-            >
-              {SLIDES[idx].caption}
-            </span>
-            <span
-              style={{
-                fontSize: "11px",
-                color: "rgba(255,255,255,0.4)",
-                fontWeight: "600",
-              }}
-            >
-              {idx + 1}/{SLIDES.length}
-            </span>
+            {String(idx + 1).padStart(2, "0")}
           </motion.div>
         </AnimatePresence>
-      </div>
-
-      {/* ── Active slide number (top-right corner) ── */}
-      <div
-        className="absolute top-6 right-6 z-20"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-          gap: "4px",
-        }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={idx}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            transition={{ duration: 0.35 }}
-            style={{
-              fontSize: "32px",
-              fontWeight: "900",
-              color: "rgba(255,255,255,0.08)",
-              lineHeight: 1,
-              userSelect: "none",
-            }}
-          >
-            0{idx + 1}
-          </motion.span>
-        </AnimatePresence>
-        <div
-          style={{
-            width: "24px",
-            height: "1.5px",
-            background: "rgba(255,255,255,0.2)",
-            borderRadius: "2px",
-          }}
-        />
-        <span
-          style={{
-            fontSize: "11px",
-            color: "rgba(255,255,255,0.3)",
-            fontWeight: "600",
-          }}
-        >
-          0{SLIDES.length}
-        </span>
+        <div className="h-1 w-16 bg-amber-500/30 ml-auto mt-2 rounded-full" />
+        <div className="text-xs text-white/20 mt-1 tracking-widest">
+          / {String(SLIDES.length).padStart(2, "0")}
+        </div>
       </div>
     </section>
   );

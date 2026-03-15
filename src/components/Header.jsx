@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useContact } from "../contexts/ContactContext.jsx";
 import {
   clearAdminSession,
   getAdminEmail,
@@ -449,8 +450,7 @@ function DropdownMenu({ items, color, visible }) {
             item === "School Uniform" || item === "विद्यालय गणवेश";
           const isDownloads = item === "Downloads" || item === "डाउनलोड";
           const isTransferCertificate =
-            item === "Transfer Certificate" ||
-            item === "स्थानांतरण प्रमाणपत्र";
+            item === "Transfer Certificate" || item === "स्थानांतरण प्रमाणपत्र";
           const isOnlineStudyMaterials =
             item === "Online Study Materials" ||
             item === "ऑनलाइन अध्ययन सामग्री";
@@ -467,8 +467,7 @@ function DropdownMenu({ items, color, visible }) {
             item === "Staff Activity" || item === "कर्मचारी गतिविधि";
           const isExtraCurricular =
             item === "Extra Curricular" || item === "पाठ्येतर गतिविधियाँ";
-          const isQuizTest =
-            item === "Quiz Test" || item === "क्विज टेस्ट";
+          const isQuizTest = item === "Quiz Test" || item === "क्विज टेस्ट";
           const href = isAboutSchool
             ? "/about"
             : isPrincipalDesk
@@ -497,63 +496,63 @@ function DropdownMenu({ items, color, visible }) {
                                     ? "/photo-gallery"
                                     : isVideoGallery
                                       ? "/video-gallery"
-                                    : isMandatoryDisclosure
-                                      ? "/mandatory-disclosure"
-                                      : isAdmissions
-                                        ? "/admissions"
-                                        : isNCC
-                                          ? "/ncc"
-                                          : isVisionMission
-                                            ? "/vision-mission"
-                                            : isAims
-                                              ? "/aims"
-                                              : isRules
-                                                ? "/rules-regulations"
-                                                : isMessageParents
-                                                  ? "/message-parents"
-                                                  : isMessageStudents
-                                                    ? "/message-students"
-                                                    : isProcedure
-                                                      ? "/important-procedure"
-                                                      : isAnthem
-                                                        ? "/school-anthem"
-                                                        : isFormerHM
-                                                          ? "/former-headmistress"
-                                                          : isRetiredTeachers
-                                                            ? "/retired-teachers"
-                                                            : isNoticeBoard
-                                                              ? "/notice-board"
-                                                              : isHolidayList
-                                                                ? "/holiday-list"
-                                                                : isAcademicCalendar
-                                                                  ? "/academic-calendar"
-                                                                  : isSchoolTimings
-                                                                    ? "/school-timings"
-                                                                    : isSchoolUniform
-                                                                      ? "/school-uniform"
-                                                                      : isDownloads
-                                                                        ? "/downloads"
-                                                                        : isTransferCertificate
-                                                                          ? "/transfer-certificate"
-                                                                          : isOnlineStudyMaterials
-                                                                            ? "/online-study-materials"
-                                                                            : isMartialArts
-                                                                              ? "/martial-arts"
-                                                                              : isAnnualSports
-                                                                                ? "/annual-sports"
-                                                                                : isExhibitions
-                                                                                  ? "/exhibitions"
-                                                                                  : isCelebrations
-                                                                                    ? "/celebrations"
-                                                                                    : isCompetitions
-                                                                                      ? "/competitions"
-                                                                                      : isStaffActivity
-                                                                                        ? "/staff-activity"
-                                                                                        : isExtraCurricular
-                                                                                          ? "/extra-curricular"
-                                                                                          : isQuizTest
-                                                                                            ? "/quiz"
-                                                            : "#";
+                                      : isMandatoryDisclosure
+                                        ? "/mandatory-disclosure"
+                                        : isAdmissions
+                                          ? "/admissions"
+                                          : isNCC
+                                            ? "/ncc"
+                                            : isVisionMission
+                                              ? "/vision-mission"
+                                              : isAims
+                                                ? "/aims"
+                                                : isRules
+                                                  ? "/rules-regulations"
+                                                  : isMessageParents
+                                                    ? "/message-parents"
+                                                    : isMessageStudents
+                                                      ? "/message-students"
+                                                      : isProcedure
+                                                        ? "/important-procedure"
+                                                        : isAnthem
+                                                          ? "/school-anthem"
+                                                          : isFormerHM
+                                                            ? "/former-headmistress"
+                                                            : isRetiredTeachers
+                                                              ? "/retired-teachers"
+                                                              : isNoticeBoard
+                                                                ? "/notice-board"
+                                                                : isHolidayList
+                                                                  ? "/holiday-list"
+                                                                  : isAcademicCalendar
+                                                                    ? "/academic-calendar"
+                                                                    : isSchoolTimings
+                                                                      ? "/school-timings"
+                                                                      : isSchoolUniform
+                                                                        ? "/school-uniform"
+                                                                        : isDownloads
+                                                                          ? "/downloads"
+                                                                          : isTransferCertificate
+                                                                            ? "/transfer-certificate"
+                                                                            : isOnlineStudyMaterials
+                                                                              ? "/online-study-materials"
+                                                                              : isMartialArts
+                                                                                ? "/martial-arts"
+                                                                                : isAnnualSports
+                                                                                  ? "/annual-sports"
+                                                                                  : isExhibitions
+                                                                                    ? "/exhibitions"
+                                                                                    : isCelebrations
+                                                                                      ? "/celebrations"
+                                                                                      : isCompetitions
+                                                                                        ? "/competitions"
+                                                                                        : isStaffActivity
+                                                                                          ? "/staff-activity"
+                                                                                          : isExtraCurricular
+                                                                                            ? "/extra-curricular"
+                                                                                            : isQuizTest
+                                                                                              ? "/quiz"
+                                                                                              : "#";
           const linkProps = {
             style: {
               display: "flex",
@@ -669,6 +668,7 @@ const Header = () => {
   const [adminEmail, setAdminEmail] = useState(getAdminEmail());
   const headerRef = useRef(null);
   const timerRef = useRef(null);
+  const { openModal } = useContact();
   const t = T[lang];
 
   useEffect(() => {
@@ -1383,7 +1383,8 @@ const Header = () => {
                           const isSchoolTimings =
                             sub === "School Timings" || sub === "विद्यालय समय";
                           const isSchoolUniform =
-                            sub === "School Uniform" || sub === "विद्यालय गणवेश";
+                            sub === "School Uniform" ||
+                            sub === "विद्यालय गणवेश";
                           const isDownloads =
                             sub === "Downloads" || sub === "डाउनलोड";
                           const isTransferCertificate =
@@ -1438,63 +1439,63 @@ const Header = () => {
                                                     ? "/photo-gallery"
                                                     : isVideoGallery
                                                       ? "/video-gallery"
-                                                    : isMandatoryDisclosure
-                                                      ? "/mandatory-disclosure"
-                                                      : isAdmissions
-                                                        ? "/admissions"
-                                                        : isNCC
-                                                          ? "/ncc"
-                                                          : isVisionMission
-                                                            ? "/vision-mission"
-                                                            : isAims
-                                                              ? "/aims"
-                                                              : isRules
-                                                                ? "/rules-regulations"
-                                                                : isMessageParents
-                                                                  ? "/message-parents"
-                                                                  : isMessageStudents
-                                                                    ? "/message-students"
-                                                                    : isProcedure
-                                                                      ? "/important-procedure"
-                                                                      : isAnthem
-                                                                        ? "/school-anthem"
-                                                                        : isFormerHM
-                                                                          ? "/former-headmistress"
-                                                                          : isRetiredTeachers
-                                                                            ? "/retired-teachers"
-                                                                            : isNoticeBoard
-                                                                              ? "/notice-board"
-                                                                              : isHolidayList
-                                                                                ? "/holiday-list"
-                                                                                : isAcademicCalendar
-                                                                                  ? "/academic-calendar"
-                                                                                  : isSchoolTimings
-                                                                                    ? "/school-timings"
-                                                                                    : isSchoolUniform
-                                                                                      ? "/school-uniform"
-                                                                                      : isDownloads
-                                                                                      ? "/downloads"
-                                                                                        : isTransferCertificate
-                                                                                          ? "/transfer-certificate"
-                                                                                          : isOnlineStudyMaterials
-                                                                                            ? "/online-study-materials"
-                                                                                            : isMartialArts
-                                                                                              ? "/martial-arts"
-                                                                                              : isAnnualSports
-                                                                                                ? "/annual-sports"
-                                                                                                : isExhibitions
-                                                                                                  ? "/exhibitions"
-                                                                                                  : isCelebrations
-                                                                                                    ? "/celebrations"
-                                                                                                    : isCompetitions
-                                                                                                      ? "/competitions"
-                                                                                                      : isStaffActivity
-                                                                                                        ? "/staff-activity"
-                                                                                                        : isExtraCurricular
-                                                                                                          ? "/extra-curricular"
-                                                                                                          : isQuizTest
-                                                                                                            ? "/quiz"
-                                                                            : "#";
+                                                      : isMandatoryDisclosure
+                                                        ? "/mandatory-disclosure"
+                                                        : isAdmissions
+                                                          ? "/admissions"
+                                                          : isNCC
+                                                            ? "/ncc"
+                                                            : isVisionMission
+                                                              ? "/vision-mission"
+                                                              : isAims
+                                                                ? "/aims"
+                                                                : isRules
+                                                                  ? "/rules-regulations"
+                                                                  : isMessageParents
+                                                                    ? "/message-parents"
+                                                                    : isMessageStudents
+                                                                      ? "/message-students"
+                                                                      : isProcedure
+                                                                        ? "/important-procedure"
+                                                                        : isAnthem
+                                                                          ? "/school-anthem"
+                                                                          : isFormerHM
+                                                                            ? "/former-headmistress"
+                                                                            : isRetiredTeachers
+                                                                              ? "/retired-teachers"
+                                                                              : isNoticeBoard
+                                                                                ? "/notice-board"
+                                                                                : isHolidayList
+                                                                                  ? "/holiday-list"
+                                                                                  : isAcademicCalendar
+                                                                                    ? "/academic-calendar"
+                                                                                    : isSchoolTimings
+                                                                                      ? "/school-timings"
+                                                                                      : isSchoolUniform
+                                                                                        ? "/school-uniform"
+                                                                                        : isDownloads
+                                                                                          ? "/downloads"
+                                                                                          : isTransferCertificate
+                                                                                            ? "/transfer-certificate"
+                                                                                            : isOnlineStudyMaterials
+                                                                                              ? "/online-study-materials"
+                                                                                              : isMartialArts
+                                                                                                ? "/martial-arts"
+                                                                                                : isAnnualSports
+                                                                                                  ? "/annual-sports"
+                                                                                                  : isExhibitions
+                                                                                                    ? "/exhibitions"
+                                                                                                    : isCelebrations
+                                                                                                      ? "/celebrations"
+                                                                                                      : isCompetitions
+                                                                                                        ? "/competitions"
+                                                                                                        : isStaffActivity
+                                                                                                          ? "/staff-activity"
+                                                                                                          : isExtraCurricular
+                                                                                                            ? "/extra-curricular"
+                                                                                                            : isQuizTest
+                                                                                                              ? "/quiz"
+                                                                                                              : "#";
                           const linkProps = {
                             style: {
                               display: "flex",

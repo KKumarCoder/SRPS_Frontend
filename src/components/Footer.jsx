@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useContact } from "../contexts/ContactContext.jsx";
 import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
 
 const Footer = () => {
+  const { openModal } = useContact();
   return (
     <footer style={{ fontFamily: "'Open Sans', sans-serif" }}>
       <style>{`
@@ -214,6 +216,20 @@ const Footer = () => {
                 <FiMail className="contact-icon" size={14} />
                 <span>info@srpskanhra.com</span>
               </div>
+
+              {/* Get In Touch CTA */}
+              <button
+                onClick={openModal}
+                className="open-contact-popup mt-6 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-teal-900 font-bold px-8 py-3 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-full md:w-auto"
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                📩 Get In Touch
+              </button>
             </div>
 
             {/* ── Col 2: Site Map ── */}

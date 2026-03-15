@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import EnquiryButton from "../components/EnquiryButton.jsx";
 
 /* ═══════════════════════════════════════════════════════════
    COLOR SYSTEM — Shree Ram Public School Logo
@@ -486,15 +487,9 @@ export default function AdmissionsPage() {
               School, Kanhra-Badhra. Shape your child's future with us.
             </p>
             <div className="flex flex-wrap gap-3">
-              <motion.a
-                href="#apply"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                className="font-black px-7 py-3 rounded-2xl text-sm shadow-xl flex items-center gap-2"
-                style={{ background: T.gold, color: T.tealDark }}
-              >
-                📋 Apply Now
-              </motion.a>
+              <EnquiryButton className="!bg-gradient-to-r !from-teal-600 !to-teal-700 !text-white !shadow-xl font-montserrat">
+                📋 Admission Enquiry
+              </EnquiryButton>
               <motion.a
                 href="#process"
                 whileHover={{ scale: 1.05 }}
@@ -825,14 +820,9 @@ export default function AdmissionsPage() {
             ))}
           </div>
           <div className="text-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="font-black px-8 py-3 rounded-2xl text-sm shadow-lg"
-              style={{ background: T.gold, color: T.tealDark }}
-            >
-              Check Scholarship Eligibility →
-            </motion.button>
+            <EnquiryButton className="!bg-gradient-to-r !from-emerald-500 !to-emerald-600 !hover:from-emerald-600 !hover:to-emerald-700 !text-white !shadow-xl font-montserrat !px-8">
+              Check Scholarship Eligibility
+            </EnquiryButton>
           </div>
         </section>
 
@@ -844,10 +834,52 @@ export default function AdmissionsPage() {
             accent={T.goldDark}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <EnquiryButton
+              fullWidth
+              className="!bg-gradient-to-r !from-teal-600 !to-teal-700 !text-white !shadow-2xl !py-4 !text-lg font-montserrat"
+            >
+              Start Application Enquiry
+            </EnquiryButton>
+            <motion.a
+              href="#"
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ y: -5 }}
+              className="card-lift flex items-center gap-5 rounded-2xl border-2 p-7 shadow-md cursor-pointer"
+              style={{
+                background: "white",
+                borderColor: T.tealPale,
+                color: T.text,
+              }}
+            >
+              <div className="text-5xl">📖</div>
+              <div className="flex-1">
+                <h3
+                  className="text-lg font-black"
+                  style={{
+                    fontFamily: "'Montserrat',sans-serif",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  School Prospectus
+                </h3>
+                <p className="text-sm mt-0.5" style={{ color: T.muted }}>
+                  Complete guide to our programs
+                </p>
+              </div>
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+                style={{ background: "rgba(13,110,122,0.1)" }}
+              >
+                ⬇
+              </div>
+            </motion.a>
             {[
               {
                 title: "Application Form",
-                sub: "Fill & submit to begin the process",
+                sub: "Get started with our enquiry form",
                 icon: "📋",
                 primary: true,
               },
@@ -857,54 +889,55 @@ export default function AdmissionsPage() {
                 icon: "📖",
                 primary: false,
               },
-            ].map((d, i) => (
-              <motion.a
-                key={i}
-                href="#"
-                initial={{ opacity: 0, x: i === 0 ? -24 : 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                whileHover={{ y: -5 }}
-                className="card-lift flex items-center gap-5 rounded-2xl border-2 p-7 shadow-md cursor-pointer"
-                style={{
-                  background: d.primary ? T.teal : "white",
-                  borderColor: d.primary ? T.teal : T.tealPale,
-                  color: d.primary ? "white" : T.text,
-                }}
-              >
-                <div className="text-5xl">{d.icon}</div>
-                <div className="flex-1">
-                  <h3
-                    className="text-lg font-black"
-                    style={{
-                      fontFamily: "'Montserrat',sans-serif",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {d.title}
-                  </h3>
-                  <p
-                    className="text-sm mt-0.5"
-                    style={{
-                      color: d.primary ? "rgba(255,255,255,0.7)" : T.muted,
-                    }}
-                  >
-                    {d.sub}
-                  </p>
-                </div>
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+            ].map((d, i) =>
+              d.primary ? (
+                <EnquiryButton
+                  key={i}
+                  fullWidth
+                  className="!bg-gradient-to-r !from-teal-600 !to-teal-700 !text-white !shadow-2xl !py-4 !text-lg font-montserrat"
+                >
+                  Start Application Enquiry
+                </EnquiryButton>
+              ) : (
+                <motion.a
+                  key={i}
+                  href="#"
+                  initial={{ opacity: 0, x: i === 0 ? -24 : 24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  whileHover={{ y: -5 }}
+                  className="card-lift flex items-center gap-5 rounded-2xl border-2 p-7 shadow-md cursor-pointer"
                   style={{
-                    background: d.primary
-                      ? T.gold + "40"
-                      : "rgba(13,110,122,0.1)",
+                    background: "white",
+                    borderColor: T.tealPale,
+                    color: T.text,
                   }}
                 >
-                  ⬇
-                </div>
-              </motion.a>
-            ))}
+                  <div className="text-5xl">{d.icon}</div>
+                  <div className="flex-1">
+                    <h3
+                      className="text-lg font-black"
+                      style={{
+                        fontFamily: "'Montserrat',sans-serif",
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {d.title}
+                    </h3>
+                    <p className="text-sm mt-0.5" style={{ color: T.muted }}>
+                      {d.sub}
+                    </p>
+                  </div>
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+                    style={{ background: "rgba(13,110,122,0.1)" }}
+                  >
+                    ⬇
+                  </div>
+                </motion.a>
+              ),
+            )}
           </div>
         </section>
 
@@ -989,14 +1022,9 @@ export default function AdmissionsPage() {
                 </motion.div>
               ))}
             </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="font-black px-10 py-4 rounded-2xl text-base shadow-2xl"
-              style={{ background: T.gold, color: T.tealDark }}
-            >
-              Enquire Now →
-            </motion.button>
+            <EnquiryButton className="!bg-gradient-to-r !from-yellow-400 !to-amber-500 !hover:from-yellow-500 !hover:to-amber-600 !text-teal-900 !shadow-2xl !px-12 !py-4 !text-lg font-montserrat">
+              Enquire Now
+            </EnquiryButton>
           </motion.div>
         </div>
       </section>

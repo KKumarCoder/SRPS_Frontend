@@ -9,6 +9,7 @@ import Notices from "../components/Notices.jsx";
 import Map from "../components/Map.jsx";
 import ATLSection from "../components/ATLSection.jsx";
 import PrincipalDesk from "../components/PrincipalDesk.jsx";
+import EnquiryButton from "../components/EnquiryButton.jsx";
 
 const showcaseCards = [
   {
@@ -32,16 +33,36 @@ const showcaseCards = [
 ];
 
 const homeJourney = [
-  { title: "Discover", desc: "Parents explore curriculum, facilities, and school values through guided interactions." },
-  { title: "Apply", desc: "Simple, transparent process for application, document submission, and counselling support." },
-  { title: "Onboard", desc: "Student orientation, class mapping, and an early success plan with teachers." },
-  { title: "Grow", desc: "Continuous progress tracking with academics, co-curricular growth, and leadership pathways." },
+  {
+    title: "Discover",
+    desc: "Parents explore curriculum, facilities, and school values through guided interactions.",
+  },
+  {
+    title: "Apply",
+    desc: "Simple, transparent process for application, document submission, and counselling support.",
+  },
+  {
+    title: "Onboard",
+    desc: "Student orientation, class mapping, and an early success plan with teachers.",
+  },
+  {
+    title: "Grow",
+    desc: "Continuous progress tracking with academics, co-curricular growth, and leadership pathways.",
+  },
 ];
 
 const innovationTracks = [
   { label: "Academics", value: "STEM + Humanities", color: "#f97316" },
-  { label: "Competency", value: "Life Skills + Communication", color: "#16a34a" },
-  { label: "Technology", value: "Coding + Robotics + AI Basics", color: "#eab308" },
+  {
+    label: "Competency",
+    value: "Life Skills + Communication",
+    color: "#16a34a",
+  },
+  {
+    label: "Technology",
+    value: "Coding + Robotics + AI Basics",
+    color: "#eab308",
+  },
   { label: "Wellness", value: "Sports + Mental Wellbeing", color: "#ef4444" },
 ];
 
@@ -121,7 +142,11 @@ function HomeEnhancements() {
           <div className="homex-spot">
             <div>
               <h2>Future-Ready Learning Ecosystem</h2>
-              <p>Modern classroom delivery, strong mentor support, project-based activities, and student wellbeing initiatives in one integrated school journey.</p>
+              <p>
+                Modern classroom delivery, strong mentor support, project-based
+                activities, and student wellbeing initiatives in one integrated
+                school journey.
+              </p>
               <div className="homex-pill-wrap">
                 <span className="homex-pill">CBSE Aligned</span>
                 <span className="homex-pill">Skill Focused</span>
@@ -132,10 +157,22 @@ function HomeEnhancements() {
             <div className="homex-spot-right">
               <h3>Academic Snapshot</h3>
               <div className="homex-kpis">
-                <div className="homex-kpi"><strong>24+</strong><span>Smart Labs & Rooms</span></div>
-                <div className="homex-kpi"><strong>35+</strong><span>Programs & Clubs</span></div>
-                <div className="homex-kpi"><strong>12+</strong><span>Olympiad Streams</span></div>
-                <div className="homex-kpi"><strong>100%</strong><span>Student Support Cells</span></div>
+                <div className="homex-kpi">
+                  <strong>24+</strong>
+                  <span>Smart Labs & Rooms</span>
+                </div>
+                <div className="homex-kpi">
+                  <strong>35+</strong>
+                  <span>Programs & Clubs</span>
+                </div>
+                <div className="homex-kpi">
+                  <strong>12+</strong>
+                  <span>Olympiad Streams</span>
+                </div>
+                <div className="homex-kpi">
+                  <strong>100%</strong>
+                  <span>Student Support Cells</span>
+                </div>
               </div>
             </div>
           </div>
@@ -144,7 +181,10 @@ function HomeEnhancements() {
         <motion.article className="homex-card" {...fadeUp}>
           <div className="homex-head">
             <h2>Campus Experience Gallery</h2>
-            <p>Placeholder visuals and highlights. Replace these images/content with your real media anytime.</p>
+            <p>
+              Placeholder visuals and highlights. Replace these images/content
+              with your real media anytime.
+            </p>
           </div>
           <div className="homex-grid">
             {showcaseCards.map((card) => (
@@ -162,7 +202,10 @@ function HomeEnhancements() {
         <motion.article className="homex-card" {...fadeUp}>
           <div className="homex-head">
             <h2>Student Growth Journey</h2>
-            <p>Diagram-style roadmap to communicate your school journey in a user-friendly format.</p>
+            <p>
+              Diagram-style roadmap to communicate your school journey in a
+              user-friendly format.
+            </p>
           </div>
           <div className="homex-diagram">
             {homeJourney.map((step, idx) => (
@@ -180,7 +223,10 @@ function HomeEnhancements() {
         <motion.article className="homex-card" {...fadeUp}>
           <div className="homex-head">
             <h2>Innovation Tracks</h2>
-            <p>Balanced development framework with academics, skill, technology and wellness.</p>
+            <p>
+              Balanced development framework with academics, skill, technology
+              and wellness.
+            </p>
           </div>
           <div className="homex-track">
             {innovationTracks.map((track, i) => (
@@ -189,7 +235,10 @@ function HomeEnhancements() {
                   <span>{track.label}</span>
                   <span>{track.value}</span>
                 </div>
-                <div className="homex-track-bar" style={{ width: `${65 + i * 8}%`, background: track.color }} />
+                <div
+                  className="homex-track-bar"
+                  style={{ width: `${65 + i * 8}%`, background: track.color }}
+                />
               </div>
             ))}
           </div>
@@ -198,17 +247,44 @@ function HomeEnhancements() {
         <motion.article className="homex-card" {...fadeUp}>
           <div className="homex-head">
             <h2>Performance & Engagement Diagram</h2>
-            <p>Visual infographic block to present yearly goals, outcomes, and participation metrics.</p>
+            <p>
+              Visual infographic block to present yearly goals, outcomes, and
+              participation metrics.
+            </p>
           </div>
           <div className="homex-data">
             <div className="homex-data-card">
               <h3>Development Mix</h3>
               <div className="homex-ring" />
               <div className="homex-leg">
-                <span><i className="homex-dot-l" style={{background:"#f97316"}} /> Academics</span>
-                <span><i className="homex-dot-l" style={{background:"#16a34a"}} /> Co-curricular</span>
-                <span><i className="homex-dot-l" style={{background:"#eab308"}} /> Competitions</span>
-                <span><i className="homex-dot-l" style={{background:"#ef4444"}} /> Wellness</span>
+                <span>
+                  <i
+                    className="homex-dot-l"
+                    style={{ background: "#f97316" }}
+                  />{" "}
+                  Academics
+                </span>
+                <span>
+                  <i
+                    className="homex-dot-l"
+                    style={{ background: "#16a34a" }}
+                  />{" "}
+                  Co-curricular
+                </span>
+                <span>
+                  <i
+                    className="homex-dot-l"
+                    style={{ background: "#eab308" }}
+                  />{" "}
+                  Competitions
+                </span>
+                <span>
+                  <i
+                    className="homex-dot-l"
+                    style={{ background: "#ef4444" }}
+                  />{" "}
+                  Wellness
+                </span>
               </div>
             </div>
             <div className="homex-data-card">
@@ -227,7 +303,9 @@ function HomeEnhancements() {
         <motion.article className="homex-card" {...fadeUp}>
           <div className="homex-head">
             <h2>Parent Information Hub</h2>
-            <p>Quick, structured communication zones for parents and students.</p>
+            <p>
+              Quick, structured communication zones for parents and students.
+            </p>
           </div>
           <div className="homex-two">
             <div className="homex-panel">
@@ -242,7 +320,9 @@ function HomeEnhancements() {
             <div className="homex-panel">
               <h3>Safety & Operations</h3>
               <ul className="homex-list">
-                <li>Transport routes with real-time parent notification model</li>
+                <li>
+                  Transport routes with real-time parent notification model
+                </li>
                 <li>Medical and emergency response protocol highlights</li>
                 <li>Campus discipline framework and attendance alerts</li>
                 <li>Structured student wellbeing and counselling support</li>
@@ -255,10 +335,21 @@ function HomeEnhancements() {
           <div className="homex-cta">
             <div>
               <h3>Admissions, Activities & Digital Learning Updates</h3>
-              <p>Keep this section for your future dynamic CMS/API content: events, forms, notices, and announcements.</p>
+              <p>
+                Keep this section for your future dynamic CMS/API content:
+                events, forms, notices, and announcements.
+              </p>
             </div>
-            <button className="homex-btn light">Explore Programs</button>
-            <button className="homex-btn warn">Download Brochure</button>
+            <EnquiryButton className="!bg-gradient-to-r !from-teal-600 !to-teal-700 !hover:from-teal-700 !hover:to-teal-800 !text-white !shadow-xl !hover:shadow-2xl">
+              Fill Enquiry Form
+            </EnquiryButton>
+            <a
+              href="/admissions"
+              className="homex-btn warn hover:shadow-xl transition-all"
+              style={{ fontFamily: "Nunito, sans-serif" }}
+            >
+              📥 Download Brochure
+            </a>
           </div>
         </motion.article>
       </div>

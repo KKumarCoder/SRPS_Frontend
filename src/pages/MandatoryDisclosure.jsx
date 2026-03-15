@@ -48,15 +48,42 @@ const generalInfo = [
 ];
 
 const documents = [
-  "Affiliation / Upgradation Letter & Recent Extension",
-  "Society / Trust / Company Registration Certificate",
-  "No Objection Certificate (NOC) by State Govt. / UT",
-  "Recognition Certificate under RTE Act, 2009",
-  "Valid Building Safety Certificate (National Building Code)",
-  "Valid Fire Safety Certificate",
-  "Self Certification for Affiliation / Upgradation",
-  "Mandatory Disclosure Details — SARAS 5.0",
-  "Water, Health and Sanitation Certificates",
+  {
+    title: "Affiliation / Upgradation Letter & Recent Extension",
+    filename:
+      "COPIES OF AFFILIATIONUPGRADATION LETTER AND RECENT EXTENSION OF AFFILIATION, IF ANY.pdf",
+  },
+  {
+    title: "Society / Trust / Company Registration Certificate",
+    filename:
+      "COPIES OF SOCIETIESTRUSTCOMPANY REGISTRATIONRENEWAL CERTIFICATE, AS APPLICABLE.pdf",
+  },
+  {
+    title: "No Objection Certificate (NOC) by State Govt. / UT",
+    filename:
+      "COPY OF NO OBJECTION CERTIFICATE (NOC) ISSUED, IF APPLICABLE, BY THE STATE GOVT.UT.pdf",
+  },
+  {
+    title: "Recognition Certificate under RTE Act, 2009",
+    filename:
+      "COPIES OF RECOGNITION CERTIFICATE UNDER RTE ACT, 2009, AND IT’S RENEWAL IF APPLICABLE.pdf",
+  },
+  {
+    title: "Valid Building Safety Certificate (National Building Code)",
+    filename:
+      "COPY OF VALID BUILDING SAFETY CERTIFICATE AS PER THE NATIONAL BUILDING CODE (2).pdf",
+  },
+  {
+    title: "Valid Fire Safety Certificate",
+    filename:
+      "COPY OF VALID FIRE SAFETY CERTIFICATE ISSUED BY THE COMPETENT AUTHORITY.pdf",
+  },
+  { title: "Calendar 24-25", filename: "CALENDER  24-25.pdf" },
+  { title: "Fees Structure", filename: "Fees structure.pdf" },
+  {
+    title: "Water, Health and Sanitation Certificates",
+    filename: "COPIES OF VALID WATER, HEALTH AND SANITATION CERTIFICATES.pdf",
+  },
 ];
 
 const staffData = [
@@ -448,7 +475,8 @@ function SectionHeader({ tag, title, icon, accent = T.teal }) {
         className="text-3xl md:text-4xl font-black flex items-center gap-3"
         style={{
           color: T.text,
-          fontFamily: "'Playfair Display', Georgia, serif",
+          fontFamily: "'Nunito', sans-serif",
+          fontWeight: 900,
         }}
       >
         <span>{icon}</span> {title}
@@ -517,14 +545,13 @@ export default function MandatoryDisclosure() {
   return (
     <div
       style={{
-        fontFamily: "'DM Sans', system-ui, sans-serif",
         background: T.cream,
         color: T.text,
       }}
       className="min-h-screen"
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap');
+        /* Nunito loaded globally via index.css */
 
         :root {
           --teal: ${T.teal};
@@ -742,7 +769,7 @@ export default function MandatoryDisclosure() {
             <div className="text-center">
               <p
                 className="font-black text-white text-base tracking-wide"
-                style={{ fontFamily: "'Playfair Display', serif" }}
+                style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900 }}
               >
                 Shree Ram Public School
               </p>
@@ -870,26 +897,23 @@ export default function MandatoryDisclosure() {
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {documents.map((doc, i) => (
-              <motion.div
+              <motion.a
                 key={i}
+                href={`/Mandatory_Document/${doc.filename}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, scale: 0.93 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
                 whileHover={{ y: -5 }}
-                className="doc-hover bg-white rounded-2xl border-2 p-5 shadow-sm cursor-pointer group"
-                style={{ borderColor: T.tealPale }}
+                className="doc-hover bg-white rounded-2xl border-2 p-5 shadow-sm group no-underline block"
+                style={{ borderColor: T.tealPale, textDecoration: "none" }}
               >
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 transition-colors duration-200"
+                    className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 transition-colors duration-200 group-hover:bg-teal-500"
                     style={{ background: T.tealPale }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = T.teal)
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = T.tealPale)
-                    }
                   >
                     📄
                   </div>
@@ -897,25 +921,25 @@ export default function MandatoryDisclosure() {
                     className="text-xs font-bold px-2.5 py-1 rounded-full"
                     style={{ background: "#dcfce7", color: "#166534" }}
                   >
-                    ✓ Available
+                    PDF ✓
                   </span>
                 </div>
                 <p
                   className="text-sm font-semibold leading-snug mb-3 transition-colors"
                   style={{ color: T.text }}
                 >
-                  {doc}
+                  {doc.title}
                 </p>
                 <div
                   className="flex items-center gap-1 text-xs font-bold transition-colors"
                   style={{ color: T.gold }}
                 >
-                  <span>View Document</span>
+                  <span>Download PDF</span>
                   <span className="group-hover:translate-x-1 transition-transform inline-block">
-                    →
+                    ↓
                   </span>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </section>
@@ -941,7 +965,8 @@ export default function MandatoryDisclosure() {
                 className="text-lg font-black mb-5 self-start"
                 style={{
                   color: T.text,
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Nunito', sans-serif",
+                  fontWeight: 900,
                 }}
               >
                 Teacher Distribution
@@ -986,7 +1011,8 @@ export default function MandatoryDisclosure() {
                 className="text-lg font-black mb-1"
                 style={{
                   color: T.text,
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Nunito', sans-serif",
+                  fontWeight: 900,
                 }}
               >
                 Staff Breakdown

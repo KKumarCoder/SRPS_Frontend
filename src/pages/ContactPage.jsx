@@ -1,25 +1,8 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
+import EnquiryButton from "../components/EnquiryButton.jsx";
 
 export default function ContactPage() {
-  const [form, setForm] = useState({
-    name: "",
-    studentName: "",
-    className: "",
-    phone: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
-  };
-
   return (
     <div className="bg-[#FAF7F2] text-[#134F5C]">
       {/* HERO */}
@@ -74,83 +57,126 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* CONTACT SECTION */}
+      {/* ENHANCED CONTACT SECTION */}
       <section className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-6 mb-20">
-        {/* LEFT - DETAILS */}
-        <div className="bg-white shadow-lg rounded-3xl p-8">
-          <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
+        {/* LEFT - ENHANCED DETAILS + CTAs */}
+        <div className="bg-gradient-to-br from-teal-50 to-blue-50 shadow-2xl rounded-3xl p-10 border border-teal-100">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-black bg-gradient-to-r from-teal-700 to-blue-700 bg-clip-text text-transparent mb-3">
+              📍 Get In Touch
+            </h3>
+            <p className="text-teal-800 font-semibold">
+              Multiple ways to connect with us
+            </p>
+          </div>
 
-          <div className="space-y-4 text-gray-700">
-            <div>
-              <p className="font-semibold">📍 Address</p>
-              <p>Village Kanhra, Charkhi Dadri, Haryana – 127308</p>
+          <div className="space-y-6 text-gray-700 mb-8">
+            <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl backdrop-blur-sm border border-teal-100">
+              <FiMapPin className="text-2xl text-teal-600 mt-1 flex-shrink-0" />
+              <div>
+                <p className="font-bold text-teal-900">Village Kanhra</p>
+                <p className="text-sm">Charkhi Dadri, Haryana – 127308</p>
+              </div>
             </div>
 
-            <div>
-              <p className="font-semibold">📞 Phone</p>
-              <p>+91-8199991081</p>
+            <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl backdrop-blur-sm border border-teal-100">
+              <FiPhone className="text-2xl text-green-600 mt-1 flex-shrink-0" />
+              <div>
+                <p className="font-bold text-green-900">+91-8199991081</p>
+                <p className="text-sm text-gray-600">Available 8 AM - 5 PM</p>
+              </div>
             </div>
 
-            <div>
-              <p className="font-semibold">📧 Email</p>
-              <p>srpskanhra@gmail.com</p>
+            <div className="flex items-start gap-4 p-4 bg-white/50 rounded-2xl backdrop-blur-sm border border-teal-100">
+              <FiMail className="text-2xl text-blue-600 mt-1 flex-shrink-0" />
+              <div>
+                <p className="font-bold text-blue-900">srpskanhra@gmail.com</p>
+                <p className="text-sm text-gray-600">
+                  Response within 24 hours
+                </p>
+              </div>
             </div>
+          </div>
 
-            <div>
-              <p className="font-semibold">🕒 Timings</p>
-              <p>Mon – Sat | 8:00 AM – 2:00 PM</p>
-            </div>
+          {/* Quick Action Buttons */}
+          <div className="space-y-3">
+            <EnquiryButton fullWidth className="!text-lg !py-4 shadow-2xl">
+              🚀 Start Enquiry
+            </EnquiryButton>
+            <EnquiryButton
+              className="!bg-gradient-to-r !from-slate-600 !to-slate-700 !text-slate-50 hover:!from-slate-700 hover:!to-slate-800 shadow-xl"
+              fullWidth
+            >
+              📞 Call Now
+            </EnquiryButton>
           </div>
         </div>
 
-        {/* RIGHT - FORM */}
-        <div className="bg-white shadow-lg rounded-3xl p-8">
-          <h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="w-full border rounded-xl px-4 py-3"
-              required
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
-
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full border rounded-xl px-4 py-3"
-              required
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-            />
-
-            <textarea
-              placeholder="Message"
-              className="w-full border rounded-xl px-4 py-3 h-32"
-              required
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-            />
-
-            <button
-              type="submit"
-              className="w-full bg-[#134F5C] text-white py-3 rounded-xl font-semibold hover:opacity-90 transition"
+        {/* RIGHT - HIGHLIGHTS */}
+        <div className="space-y-8">
+          <div className="bg-white shadow-xl rounded-3xl p-8 border-4 border-teal-100">
+            <h3 className="text-2xl font-black text-teal-900 mb-6 text-center">
+              🏫 Why Choose Us?
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6 text-teal-900">
+              <div className="space-y-3">
+                <h4 className="font-bold text-xl flex items-center gap-2">
+                  📚 <span>Academics</span>
+                </h4>
+                <ul className="text-sm space-y-1 pl-4">
+                  <li className="flex items-center gap-2">
+                    ✅ CBSE Curriculum
+                  </li>
+                  <li className="flex items-center gap-2">
+                    ✅ Smart Classrooms
+                  </li>
+                  <li className="flex items-center gap-2">✅ 95%+ Results</li>
+                </ul>
+              </div>
+              <div className="space-y-3">
+                <h4 className="font-bold text-xl flex items-center gap-2">
+                  🏆 <span>Achievements</span>
+                </h4>
+                <ul className="text-sm space-y-1 pl-4">
+                  <li className="flex items-center gap-2">
+                    ✅ Sports Excellence
+                  </li>
+                  <li className="flex items-center gap-2">
+                    ✅ ATL Lab Certified
+                  </li>
+                  <li className="flex items-center gap-2">✅ NCC Unit</li>
+                </ul>
+              </div>
+            </div>
+            <EnquiryButton
+              className="!mt-6 !w-full !shadow-2xl !text-lg"
+              fullWidth
             >
-              Submit Inquiry
-            </button>
+              Ask About Admissions
+            </EnquiryButton>
+          </div>
 
-            <AnimatePresence>
-              {sent && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="text-green-600 font-semibold text-center"
-                >
-                  ✅ Message Sent Successfully!
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </form>
+          <div className="bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-2xl border-4 border-yellow-200 text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="w-16 h-16 bg-yellow-400 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-2xl font-bold text-yellow-900">24/7</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-xl text-amber-900">
+                  Support Ready
+                </h4>
+                <p className="text-sm text-amber-800">
+                  Enquiries answered within 2 hours
+                </p>
+              </div>
+            </div>
+            <EnquiryButton
+              fullWidth
+              className="!bg-gradient-to-r !from-amber-500 !to-yellow-500 !shadow-xl"
+            >
+              Quick Enquiry
+            </EnquiryButton>
+          </div>
         </div>
       </section>
     </div>

@@ -1,9 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap');
 @import "tailwindcss";
 
 html {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* Contact Modal Global Styles */
+.from-teal-600 { background-color: #0d9488; }
+.from-teal-700 { background-color: #0f766e; }
+.teal-200 { background-color: #b2f5ea; }
+.teal-300 { background-color: #5eead4; }
+.teal-400 { background-color: #2dd4bf; }
+.teal-600 { background-color: #0d9488; }
+.teal-700 { background-color: #0f766e; }
+.text-teal-600 { color: #0d9488; }
+.text-teal-700 { color: #0f766e; }
+.ring-teal-200\/50 { box-shadow: 0 0 0 3px rgb(196 245 230 / 0.5); }
+.ring-teal-500\/50 { box-shadow: 0 0 0 3px rgb(20 184 166 / 0.5); }
+
+/* Custom scrollbar for modal */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 4px;
+}
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
 }
