@@ -55,6 +55,7 @@ import CompetitionsPage from "./pages/CompetitionsPage.jsx";
 import StaffActivityPage from "./pages/StaffActivityPage.jsx";
 import ExtraCurricularPage from "./pages/ExtraCurricularPage.jsx";
 import QuizPage from "./pages/Quiz.jsx";
+import SocialFloatingButtons from "./components/SocialFloatingButtons.jsx";
 
 export function App() {
   return (
@@ -143,6 +144,7 @@ export function App() {
         <Route path="/admin" element={<AdminPanelPage />} />
       </Routes>
       <Footer />
+      <SocialFloatingButtons />
     </BrowserRouter>
   );
 }

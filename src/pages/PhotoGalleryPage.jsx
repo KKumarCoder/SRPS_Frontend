@@ -255,34 +255,7 @@ function LEDBoardCarousel({ photos = [], interval = 5000 }) {
                   </div>
 
                   {/* Main content */}
-                  <div className="led-slide-content">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          gap: ".5rem",
-                        }}
-                      >
-                        <div className="led-slide-badge">
-                          ◆ SHREE RAM SCHOOL · JODHPUR ◆
-                        </div>
-                        <div className="led-slide-title">
-                          {current.title || current.alt || "School Gallery"}
-                        </div>
-                        <div className="led-slide-desc">
-                          {current.description ||
-                            "Celebrating memories, achievements & vibrant campus life."}
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
+                  <div className="led-slide-content" aria-hidden="true" />
 
                   {/* Nav */}
                   <div className="led-nav">
@@ -527,21 +500,21 @@ const SPOTLIGHT_DATA = [
     key: "Campus Life",
     eyebrow: "Daily Vibrancy",
     heading: "Where Learning Meets Life",
-    body: "दैनिक जीवन की जीवंतता: हमारा हरा-भरा कैंपस छात्रों के लिए दूसरा घर है। क्लासरूम से लेकर लाइब्रेरी, लैब से खेल का मैदान — हर कोना शिक्षा और मस्ती से भरा।",
+    body: "Vibrant daily life: our lush campus feels like a second home, and every corner from classrooms to the library, labs to playing fields embraces learning and joy.",
     cta: "Explore Campus →",
   },
   {
     key: "Events & Activities",
     eyebrow: "Celebrations & Culture",
     heading: "Every Occasion, Unforgettable",
-    body: "उत्सवों का संगम: स्वतंत्रता दिवस, दीपावली, विज्ञान प्रदर्शनी से लेकर वार्षिक समारोह तक — हर अवसर यादगार। छात्र नृत्य, नाटक, क्विज में प्रतिभा दिखाते हैं।",
+    body: "Celebrations converge here: from Independence Day and Diwali to science exhibitions and the annual function — every occasion is unforgettable, with students showcasing talent through dance, drama, and quizzes.",
     cta: "View All Events →",
   },
   {
     key: "NCC & Sports",
     eyebrow: "Discipline & Valor",
     heading: "Body, Mind & Nation",
-    body: "NCC & Sports में पराक्रम: एनसीसी कैडेट्स अनुशासन सिखाते, परेड में देशभक्ति दिखाते। खेल में फुटबॉल, एथलेटिक्स से जिले में विजय प्राप्त करते हैं।",
+    body: "Valor in NCC & Sports: cadets embody discipline and patriotism during parades, while football and athletics victories bring district-wide pride.",
     cta: "See Achievements →",
   },
 ];
@@ -739,11 +712,11 @@ export default function PhotoGalleryPage() {
                 parades, science exhibitions, and cultural fests — every frame
                 tells a story.
               </p>
-              <div className="gp-hindi-block">
-                <strong>स्वागत है श्री राम स्कूल की फोटो गैलरी में!</strong>{" "}
-                1200+ छात्रों के साथ अनुशासित वातावरण में उत्कृष्ट शिक्षा।
-                एनसीसी, खेल, सांस्कृतिक कार्यक्रम — हर क्षण यादगार।
-              </div>
+            <div className="gp-hindi-block">
+              <strong>Welcome to Shree Ram School's photo gallery!</strong>{" "}
+              Over 1,200 students thrive in a disciplined atmosphere with outstanding education.
+              NCC, sports, and cultural programs keep every moment memorable.
+            </div>
             </div>
             <div className="gp-intro-divider" />
             <div className="gp-intro-right">
