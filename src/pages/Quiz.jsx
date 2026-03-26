@@ -1,286 +1,466 @@
-import { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import QuizPlayer from "../quiz/QuizPlayer.jsx";
-import { quizService } from "../services/quizService.js";
-import { getWsEndpoint } from "../utils/realtime.js";
+import {
+  FaFlask,
+  FaUserMd,
+  FaShieldAlt,
+  FaTrophy,
+  FaBookOpen,
+  FaFlag,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaGraduationCap,
+  FaChalkboardTeacher,
+  FaUsers,
+} from "react-icons/fa";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-const WS_ENDPOINT = getWsEndpoint(API_BASE);
-
-function fmtSec(sec) {
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return `${m}m ${String(s).padStart(2, "0")}s`;
-}
-
-export default function QuizPage() {
-  const [quizzes, setQuizzes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [subjectFilter, setSubjectFilter] = useState("all");
-  const [gradeFilter, setGradeFilter] = useState("all");
-  const [topicFilter, setTopicFilter] = useState("all");
-
-  const [startQuiz, setStartQuiz] = useState(null);
-  const [participant, setParticipant] = useState({ name: "", grade: "", email: "" });
-  const [starting, setStarting] = useState(false);
-
-  const [activeAttempt, setActiveAttempt] = useState(null);
-  const [result, setResult] = useState(null);
-  const [leaderboard, setLeaderboard] = useState([]);
-
-  const load = async () => {
-    try {
-      setLoading(true);
-      setError("");
-      const data = await quizService.listPublished();
-      setQuizzes(Array.isArray(data) ? data : []);
-    } catch (err) {
-      setError(err.message || "Unable to load quizzes");
-    } finally {
-      setLoading(false);
-    }
+const Quiz = () => {
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 60 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
-  useEffect(() => {
-    load();
-  }, []);
-
-  useEffect(() => {
-    if (!quizzes.length || startQuiz) return;
-    const params = new URLSearchParams(window.location.search);
-    const quizId = params.get("quiz");
-    if (!quizId) return;
-    const matched = quizzes.find((q) => String(q._id) === String(quizId));
-    if (matched) setStartQuiz(matched);
-  }, [quizzes, startQuiz]);
-
-  useEffect(() => {
-    let socket;
-    let pollId;
-    const quizId = activeAttempt?.quiz?._id;
-
-    if (!quizId) return undefined;
-
-    const loadLeaderboard = async () => {
-      try {
-        const rows = await quizService.leaderboard(quizId);
-        setLeaderboard(rows || []);
-      } catch {
-        // ignore
-      }
-    };
-
-    loadLeaderboard();
-
-    try {
-      socket = new WebSocket(WS_ENDPOINT);
-      socket.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          if (data?.event === "quiz:leaderboard" && data?.payload?.quizId === quizId) {
-            loadLeaderboard();
-          }
-          if (data?.event === "quiz:changed") {
-            load();
-          }
-        } catch {
-          // ignore malformed socket payloads
-        }
-      };
-      socket.onerror = () => {
-        pollId = setInterval(loadLeaderboard, 5000);
-      };
-    } catch {
-      pollId = setInterval(loadLeaderboard, 5000);
-    }
-
-    return () => {
-      if (pollId) clearInterval(pollId);
-      if (socket && socket.readyState === WebSocket.OPEN) socket.close();
-    };
-  }, [activeAttempt?.quiz?._id]);
-
-  const subjects = useMemo(() => ["all", ...new Set(quizzes.map((q) => q.subject).filter(Boolean))], [quizzes]);
-  const grades = useMemo(() => ["all", ...new Set(quizzes.map((q) => q.grade).filter(Boolean))], [quizzes]);
-  const topics = useMemo(() => ["all", ...new Set(quizzes.map((q) => q.topic).filter(Boolean))], [quizzes]);
-
-  const filtered = useMemo(
-    () =>
-      quizzes.filter(
-        (q) =>
-          (subjectFilter === "all" || q.subject === subjectFilter) &&
-          (gradeFilter === "all" || q.grade === gradeFilter) &&
-          (topicFilter === "all" || q.topic === topicFilter),
-      ),
-    [quizzes, subjectFilter, gradeFilter, topicFilter],
-  );
-
-  const doStartQuiz = async () => {
-    if (!startQuiz?._id || !participant.name) return;
-    try {
-      setStarting(true);
-      const data = await quizService.startQuiz(startQuiz._id, participant);
-      setActiveAttempt(data);
-      setResult(null);
-      setStartQuiz(null);
-    } catch (err) {
-      alert(err.message || "Unable to start quiz");
-    } finally {
-      setStarting(false);
-    }
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
   };
 
-  if (activeAttempt?.quiz && !result) {
-    return (
-      <main className="quiz-page">
-        <style>{styles}</style>
-        <section className="quiz-wrap">
-          <div className="quiz-player-card glass">
-            <h1>{activeAttempt.quiz.title}</h1>
-            <p>{activeAttempt.quiz.subject} | {activeAttempt.quiz.topic} | {activeAttempt.quiz.grade}</p>
-            <QuizPlayer
-              quiz={activeAttempt.quiz}
-              attemptToken={activeAttempt.attemptToken}
-              onFinished={(r) => setResult(r)}
-            />
-          </div>
+  const programs = [
+    {
+      icon: FaFlask,
+      title: "IIT-JEE",
+      color: "orange",
+      desc: "Expert coaching for India's top engineering entrance exam",
+    },
+    {
+      icon: FaUserMd,
+      title: "NEET-UG",
+      color: "green",
+      desc: "Comprehensive preparation for medical aspirants",
+    },
+    {
+      icon: FaShieldAlt,
+      title: "NDA",
+      color: "blue",
+      desc: "Rigorous training for defence services academy",
+    },
+    {
+      icon: FaTrophy,
+      title: "OLYMPIAD",
+      color: "yellow",
+      desc: "International level competitive exam preparation",
+    },
+    {
+      icon: FaBookOpen,
+      title: "Foundation",
+      color: "orange",
+      desc: "Strong conceptual base for classes 6-10",
+    },
+    {
+      icon: FaFlag,
+      title: "NCC",
+      color: "green",
+      desc: "Discipline and leadership through cadet training",
+    },
+  ];
 
-          <aside className="quiz-leader glass">
-            <h2>Live Leaderboard</h2>
-            {leaderboard.length === 0 ? (
-              <p>No submissions yet.</p>
-            ) : (
-              leaderboard.map((row) => (
-                <div className="lb-row" key={`${row.rank}-${row.participantName}`}>
-                  <span>#{row.rank}</span>
-                  <strong>{row.participantName}</strong>
-                  <span>{row.score}</span>
-                </div>
-              ))
-            )}
-          </aside>
-        </section>
-      </main>
-    );
-  }
-
-  if (result) {
-    return (
-      <main className="quiz-page">
-        <style>{styles}</style>
-        <section className="quiz-wrap">
-          <div className="result glass">
-            <h1>Quiz Result</h1>
-            <div className="result-grid">
-              <div><span>Score</span><strong>{result.score}/{result.totalMarks}</strong></div>
-              <div><span>Correct</span><strong>{result.correctCount}/{result.totalQuestions}</strong></div>
-              <div><span>Rank</span><strong>#{result.rank || "-"}</strong></div>
-              <div><span>Duration</span><strong>{fmtSec(result.durationSec || 0)}</strong></div>
-            </div>
-            <button className="qz-btn qz-btn-pr" onClick={() => { setActiveAttempt(null); setResult(null); load(); }}>
-              Back To Quiz List
-            </button>
-          </div>
-        </section>
-      </main>
-    );
-  }
+  const getColorClasses = (color) => {
+    switch (color) {
+      case "orange":
+        return "bg-orange-100 text-orange-600 group-hover:bg-orange-500 group-hover:text-white";
+      case "green":
+        return "bg-green-100 text-green-600 group-hover:bg-green-500 group-hover:text-white";
+      case "blue":
+        return "bg-blue-100 text-blue-600 group-hover:bg-blue-500 group-hover:text-white";
+      case "yellow":
+        return "bg-yellow-100 text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white";
+      default:
+        return "bg-gray-100 text-gray-600";
+    }
+  };
 
   return (
-    <main className="quiz-page">
-      <style>{styles}</style>
-      <section className="hero glass">
-        <h1>Quiz Competition Arena</h1>
-        <p>Subject-wise, topic-wise and grade-wise real-time quiz competitions.</p>
-      </section>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white overflow-x-hidden">
+      {/* Floating decorative elements */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-700"></div>
+      </div>
 
-      <section className="filters glass">
-        <select value={subjectFilter} onChange={(e) => setSubjectFilter(e.target.value)}>{subjects.map((s) => <option key={s} value={s}>{s === "all" ? "All Subjects" : s}</option>)}</select>
-        <select value={topicFilter} onChange={(e) => setTopicFilter(e.target.value)}>{topics.map((s) => <option key={s} value={s}>{s === "all" ? "All Topics" : s}</option>)}</select>
-        <select value={gradeFilter} onChange={(e) => setGradeFilter(e.target.value)}>{grades.map((s) => <option key={s} value={s}>{s === "all" ? "All Grades" : s}</option>)}</select>
-      </section>
+      {/* Hero Section */}
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+        className="container mx-auto px-4 md:px-6 pt-16 md:pt-24 pb-12"
+      >
+        <div className="flex flex-col lg:flex-row items-center gap-12">
+          <motion.div
+            variants={fadeInUp}
+            className="flex-1 text-center lg:text-left"
+          >
+            <motion.div
+              variants={fadeInUp}
+              className="inline-block px-4 py-2 bg-orange-100 rounded-full mb-6"
+            >
+              <span className="text-orange-600 font-semibold text-sm">
+                #SR0 2026 Excellence Program
+              </span>
+            </motion.div>
+            <motion.h1
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+            >
+              <span className="bg-gradient-to-r from-blue-600 via-orange-500 to-green-600 bg-clip-text text-transparent">
+                कामयाब बनो ...
+              </span>
+              <br />
+              <span className="text-gray-800">श्रीराम को चुनो !</span>
+            </motion.h1>
+            <motion.p
+              variants={fadeInUp}
+              className="text-xl text-gray-600 mb-8"
+            >
+              SR0 2026 • सर्वश्रेष्ठ का संकल्प
+            </motion.p>
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-wrap gap-4 justify-center lg:justify-start"
+            >
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition"
+              >
+                Enroll Now
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="border-2 border-blue-500 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition"
+              >
+                View Programs
+              </motion.button>
+            </motion.div>
+          </motion.div>
 
-      {loading && <p className="status">Loading quizzes...</p>}
-      {error && <p className="status error">{error}</p>}
-
-      <section className="cards">
-        {filtered.map((q) => (
-          <motion.article key={q._id} className="card glass" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-            <h3>{q.title}</h3>
-            <p>{q.subject} | {q.topic} | {q.grade}</p>
-            <ul>
-              <li>Total Questions: {q.totalQuestions}</li>
-              <li>Total Marks: {q.totalMarks}</li>
-              <li>Time Limit: {fmtSec(q.totalTimeLimitSec || 0)}</li>
-              <li>Status: {q.status}</li>
-            </ul>
-            <button className="qz-btn qz-btn-pr" onClick={() => setStartQuiz(q)}>Start Quiz</button>
-          </motion.article>
-        ))}
-      </section>
-
-      {startQuiz && (
-        <div className="modal-bg" onClick={() => setStartQuiz(null)}>
-          <div className="modal glass" onClick={(e) => e.stopPropagation()}>
-            <h3>Join: {startQuiz.title}</h3>
-            <input placeholder="Your Name" value={participant.name} onChange={(e) => setParticipant((p) => ({ ...p, name: e.target.value }))} />
-            <input placeholder="Grade/Class" value={participant.grade} onChange={(e) => setParticipant((p) => ({ ...p, grade: e.target.value }))} />
-            <input placeholder="Email (optional)" value={participant.email} onChange={(e) => setParticipant((p) => ({ ...p, email: e.target.value }))} />
-            <div className="modal-actions">
-              <button className="qz-btn" onClick={() => setStartQuiz(null)}>Cancel</button>
-              <button className="qz-btn qz-btn-pr" disabled={starting || !participant.name} onClick={doStartQuiz}>{starting ? "Starting..." : "Enter Quiz"}</button>
+          <motion.div variants={fadeInUp} className="flex-1 relative">
+            <div className="relative w-full max-w-md mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-orange-400 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+              <div className="relative bg-white rounded-2xl shadow-2xl p-6 border border-gray-100">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-4 bg-blue-50 rounded-xl">
+                    <FaGraduationCap className="text-3xl text-blue-600 mx-auto mb-2" />
+                    <p className="font-bold text-gray-800">IIT-JEE</p>
+                    <p className="text-xs text-gray-500">Rank 1 Selection</p>
+                  </div>
+                  <div className="text-center p-4 bg-green-50 rounded-xl">
+                    <FaUserMd className="text-3xl text-green-600 mx-auto mb-2" />
+                    <p className="font-bold text-gray-800">NEET-UG</p>
+                    <p className="text-xs text-gray-500">Top Performers</p>
+                  </div>
+                  <div className="text-center p-4 bg-yellow-50 rounded-xl">
+                    <FaShieldAlt className="text-3xl text-yellow-600 mx-auto mb-2" />
+                    <p className="font-bold text-gray-800">NDA</p>
+                    <p className="text-xs text-gray-500">Selection Record</p>
+                  </div>
+                  <div className="text-center p-4 bg-orange-50 rounded-xl">
+                    <FaTrophy className="text-3xl text-orange-600 mx-auto mb-2" />
+                    <p className="font-bold text-gray-800">Olympiad</p>
+                    <p className="text-xs text-gray-500">Gold Medalists</p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Programs Section */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+        className="container mx-auto px-4 md:px-6 py-20"
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          className="text-center max-w-2xl mx-auto"
+        >
+          <motion.h2
+            initial={{ y: 30 }}
+            whileInView={{ y: 0 }}
+            className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"
+          >
+            Scan QR to Start SR0 Quiz
+          </motion.h2>
+          <motion.p
+            initial={{ y: 20 }}
+            whileInView={{ y: 0 }}
+            className="text-xl text-gray-700 mb-12"
+          >
+            QR कोड स्कैन करके क्विज में भाग लें | Instant Quiz Access
+          </motion.p>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="bg-white p-8 rounded-3xl shadow-2xl max-w-md mx-auto border-4 border-orange-100"
+          >
+            <motion.img
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              src="./QuizStart.png"
+              alt="Quiz Start QR Code - स्कैन करके क्विज शुरू करें"
+              className="w-48 h-48 mx-auto rounded-2xl shadow-xl md:w-64 md:h-64 block"
+            />
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-6 bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition"
+            >
+              Join Quiz Now →
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      </motion.section>
+
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+        className="container mx-auto px-4 md:px-6 py-20"
+      >
+        <motion.div variants={fadeInUp} className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+              Our Premier Programs
+            </span>
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Comprehensive coaching for competitive excellence with expert
+            faculty and proven methodologies
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {programs.map((program, index) => (
+            <motion.div
+              key={index}
+              variants={fadeInUp}
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100"
+            >
+              <div className="p-6">
+                <div
+                  className={`w-16 h-16 rounded-xl ${getColorClasses(program.color)} flex items-center justify-center mb-5 transition-colors duration-300`}
+                >
+                  <program.icon className="text-2xl group-hover:text-white transition-colors duration-300" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">
+                  {program.title}
+                </h3>
+                <p className="text-gray-600">{program.desc}</p>
+                <div className="mt-4 flex items-center text-orange-500 font-semibold text-sm">
+                  Learn more →
+                </div>
+              </div>
+              <div
+                className={`h-1 w-full bg-gradient-to-r from-${program.color}-400 to-${program.color}-600`}
+              ></div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* QR Code Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="container mx-auto px-4 md:px-6 py-20 bg-gradient-to-r from-yellow-50 to-orange-50"
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          className="text-center max-w-2xl mx-auto"
+        >
+          <motion.h2
+            initial={{ y: 30 }}
+            whileInView={{ y: 0 }}
+            className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"
+          >
+            Scan QR to Start SR0 Quiz
+          </motion.h2>
+          <motion.p
+            initial={{ y: 20 }}
+            whileInView={{ y: 0 }}
+            className="text-xl text-gray-700 mb-12"
+          >
+            QR कोड स्कैन करके क्विज में भाग लें | Instant Quiz Access
+          </motion.p>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="bg-white p-8 rounded-3xl shadow-2xl max-w-md mx-auto border-4 border-orange-100"
+          >
+            <motion.img
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              src="./QuizStart.png"
+              alt="Quiz Start QR Code - स्कैन करके क्विज शुरू करें"
+              className="w-48 h-48 mx-auto rounded-2xl shadow-xl md:w-64 md:h-64 block"
+            />
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-6 bg-gradient-to-r from-green-500 to-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition"
+            >
+              Join Quiz Now →
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      </motion.section>
+
+      {/* SR0 2026 Banner */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="container mx-auto px-4 md:px-6 py-8"
+      >
+        <div className="bg-gradient-to-r from-blue-600 via-orange-500 to-green-600 rounded-2xl p-8 md:p-12 shadow-xl">
+          <div className="text-center">
+            <motion.h3
+              initial={{ y: 20 }}
+              whileInView={{ y: 0 }}
+              className="text-3xl md:text-5xl font-bold text-white mb-4"
+            >
+              SR0 2026
+            </motion.h3>
+            <p className="text-white/90 text-lg md:text-xl mb-6">
+              श्रीराम ओलंपियाड 2026 • Mega Scholarship Test
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              className="bg-yellow-400 text-gray-900 px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition"
+            >
+              Register for SR0 2026
+            </motion.button>
           </div>
         </div>
-      )}
-    </main>
-  );
-}
+      </motion.div>
 
-const styles = `
-:root { --qz-bg:#eaf1fb; --qz-glass:rgba(255,255,255,.2); --qz-border:rgba(255,255,255,.35); --qz-text:#123749; --qz-pr:#2563eb; --qz-pr2:#0ea5a4; }
-@media (prefers-color-scheme: dark) {
-  :root { --qz-bg:#0f172a; --qz-glass:rgba(15,23,42,.55); --qz-border:rgba(148,163,184,.22); --qz-text:#e2e8f0; }
-}
-.quiz-page { min-height:100vh; padding:30px 14px 80px; background:linear-gradient(150deg,var(--qz-bg),#dbeafe); color:var(--qz-text); font-family:'Jost',sans-serif; }
-.glass { background:var(--qz-glass); backdrop-filter: blur(15px); border:1px solid var(--qz-border); border-radius:16px; box-shadow:0 16px 34px rgba(15,23,42,.12); }
-.hero { max-width:1180px; margin:0 auto 14px; padding:22px; }
-.hero h1 { margin:0 0 6px; font-size:clamp(1.6rem,3.5vw,2.3rem); }
-.hero p { margin:0; opacity:.9; }
-.filters { max-width:1180px; margin:0 auto 14px; padding:12px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
-.filters select, .modal input { width:100%; padding:10px; border-radius:10px; border:1px solid rgba(148,163,184,.4); background:rgba(255,255,255,.7); color:#0f172a; }
-.cards { max-width:1180px; margin:0 auto; display:grid; gap:12px; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
-.card { padding:14px; }
-.card h3 { margin:0 0 6px; }
-.card p { margin:0 0 8px; font-size:.9rem; opacity:.9; }
-.card ul { margin:0 0 10px; padding-left:18px; font-size:.88rem; }
-.qz-btn { border:none; border-radius:10px; padding:9px 12px; font-weight:700; cursor:pointer; }
-.qz-btn-pr { background:linear-gradient(135deg,var(--qz-pr),var(--qz-pr2)); color:#fff; }
-.status { max-width:1180px; margin:0 auto 10px; }
-.status.error { color:#991b1b; }
-.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; z-index:100; }
-.modal { width:min(460px,92vw); padding:14px; display:grid; gap:9px; }
-.modal-actions { display:flex; justify-content:flex-end; gap:8px; }
-.quiz-wrap { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 300px; gap:12px; }
-.quiz-player-card, .quiz-leader, .result { padding:14px; }
-.quiz-player-card h1 { margin:0 0 6px; }
-.quiz-player-card p { margin:0 0 10px; opacity:.9; }
-.qz-play-wrap { display:grid; gap:10px; }
-.qz-progress { width:100%; height:10px; border-radius:999px; background:rgba(148,163,184,.3); overflow:hidden; }
-.qz-progress-bar { height:100%; background:linear-gradient(135deg,#2563eb,#0ea5a4); }
-.qz-meta { display:flex; gap:10px; flex-wrap:wrap; font-size:.84rem; }
-.qz-question h3 { margin:0 0 10px; }
-.qz-options { display:grid; gap:8px; }
-.qz-opt { text-align:left; border:1px solid rgba(148,163,184,.4); background:rgba(255,255,255,.75); padding:10px; border-radius:10px; cursor:pointer; color:#0f172a; }
-.qz-opt.active { border-color:#2563eb; background:#dbeafe; }
-.qz-actions { display:flex; justify-content:space-between; gap:8px; }
-.qz-error { color:#991b1b; font-size:.88rem; }
-.quiz-leader h2 { margin:0 0 8px; }
-.lb-row { display:grid; grid-template-columns:44px 1fr 40px; gap:8px; align-items:center; padding:8px; border-radius:9px; background:rgba(255,255,255,.35); margin-bottom:6px; }
-.result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:12px 0; }
-.result-grid div { background:rgba(255,255,255,.35); border-radius:10px; padding:10px; display:grid; }
-.result-grid span { font-size:.8rem; opacity:.8; }
-.result-grid strong { font-size:1.1rem; }
-@media (max-width:980px) { .filters { grid-template-columns:1fr; } .quiz-wrap { grid-template-columns:1fr; } }
-`;
+      {/* Why Choose Us Section */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={staggerContainer}
+        className="container mx-auto px-4 md:px-6 py-20"
+      >
+        <motion.div variants={fadeInUp} className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Why <span className="text-orange-500">Shree Ram</span>?
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Setting benchmarks in educational excellence since inception
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              icon: FaChalkboardTeacher,
+              title: "Expert Faculty",
+              desc: "Highly qualified teachers with IIT/NIT/Medical backgrounds",
+              color: "blue",
+            },
+            {
+              icon: FaTrophy,
+              title: "Proven Results",
+              desc: "Consistent top ranks in JEE, NEET, and Olympiads",
+              color: "orange",
+            },
+            {
+              icon: FaUsers,
+              title: "Holistic Growth",
+              desc: "Personality development, NCC training, and sports",
+              color: "green",
+            },
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              variants={fadeInUp}
+              whileHover={{ y: -5 }}
+              className="bg-white rounded-xl p-8 shadow-lg text-center border border-gray-100"
+            >
+              <div
+                className={`w-20 h-20 mx-auto rounded-full bg-${item.color}-100 flex items-center justify-center mb-5`}
+              >
+                <item.icon className={`text-3xl text-${item.color}-600`} />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">
+                {item.title}
+              </h3>
+              <p className="text-gray-600">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* CTA Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="bg-gradient-to-r from-blue-50 via-orange-50 to-green-50 py-16"
+      >
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <motion.h2
+            initial={{ y: 30 }}
+            whileInView={{ y: 0 }}
+            className="text-3xl md:text-4xl font-bold text-gray-800 mb-4"
+          >
+            Make your child a part of the{" "}
+            <span className="text-orange-500">Best CBSE School in Badhra</span>
+          </motion.h2>
+          <motion.p
+            initial={{ y: 30 }}
+            whileInView={{ y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto"
+          >
+            Limited seats available for academic session 2026-27
+          </motion.p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition"
+          >
+            Admission Open 2026
+          </motion.button>
+        </div>
+      </motion.section>
+
+     
+    </div>
+  );
+};
+
+export default Quiz;

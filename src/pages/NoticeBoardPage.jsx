@@ -25,7 +25,9 @@ const WS_ENDPOINT = (() => {
 })();
 
 function toGoogleDate(isoString) {
-  return new Date(isoString).toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  return (
+    new Date(isoString).toISOString().replace(/[-:]/g, "").split(".")[0] + "Z"
+  );
 }
 
 function formatDateTime(isoString) {
@@ -48,7 +50,9 @@ export default function NoticeBoardPage() {
 
   const tickerText = useMemo(() => {
     if (!notices.length) return "No notices available right now.";
-    return notices.map((n) => `${n.tag || "General"}: ${n.title}`).join("   •   ");
+    return notices
+      .map((n) => `${n.tag || "General"}: ${n.title}`)
+      .join("   •   ");
   }, [notices]);
 
   const fetchNotices = useCallback(async (showLoader = false) => {
@@ -57,7 +61,9 @@ export default function NoticeBoardPage() {
       setError("");
       const res = await fetch(`${NOTICES_API}?limit=100`);
       if (!res.ok) throw new Error(`Failed to load notices (${res.status})`);
+
       const data = await res.json();
+
       const normalized = data
         .map((n) => ({
           ...n,
@@ -124,7 +130,11 @@ export default function NoticeBoardPage() {
     const shareText = `${notice.title}\n${notice.summary}\n${formatDateTime(notice.startIso)}\n${notice.place}`;
     if (navigator.share) {
       try {
-        await navigator.share({ title: notice.title, text: shareText, url: window.location.href });
+        await navigator.share({
+          title: notice.title,
+          text: shareText,
+          url: window.location.href,
+        });
         return;
       } catch {
         // fallback
@@ -153,7 +163,11 @@ export default function NoticeBoardPage() {
       location: notice.place,
       dates: `${toGoogleDate(notice.startIso)}/${toGoogleDate(notice.endIso || notice.startIso)}`,
     });
-    window.open(`https://calendar.google.com/calendar/render?${params.toString()}`, "_blank", "noopener,noreferrer");
+    window.open(
+      `https://calendar.google.com/calendar/render?${params.toString()}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
   };
 
   return (
@@ -397,19 +411,50 @@ export default function NoticeBoardPage() {
                   <h2>{latest.title}</h2>
                   <p>{latest.summary || "No summary available."}</p>
                   <div className="nb-meta">
-                    <div><FaCalendarAlt /> {formatDateTime(latest.startIso)}</div>
-                    <div><FaClock /> {new Date(latest.startIso).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true })}</div>
-                    <div><FaMapMarkerAlt /> {latest.place || "School Campus"}</div>
+                    <div>
+                      <FaCalendarAlt /> {formatDateTime(latest.startIso)}
+                    </div>
+                    <div>
+                      <FaClock />{" "}
+                      {new Date(latest.startIso).toLocaleTimeString("en-IN", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
+                    </div>
+                    <div>
+                      <FaMapMarkerAlt /> {latest.place || "School Campus"}
+                    </div>
                   </div>
 
                   <div className="nb-actions">
-                    <button type="button" className="nb-btn" onClick={() => handleShare(latest)}><FaShareAlt /> Share</button>
-                    <button type="button" className="nb-btn nb-btn-wa" onClick={() => handleWhatsappShare(latest)}><FaWhatsapp /> WhatsApp</button>
-                    <button type="button" className="nb-btn" onClick={() => openGoogleCalendar(latest)}><FaCalendarPlus /> Calendar</button>
+                    <button
+                      type="button"
+                      className="nb-btn"
+                      onClick={() => handleShare(latest)}
+                    >
+                      <FaShareAlt /> Share
+                    </button>
+                    <button
+                      type="button"
+                      className="nb-btn nb-btn-wa"
+                      onClick={() => handleWhatsappShare(latest)}
+                    >
+                      <FaWhatsapp /> WhatsApp
+                    </button>
+                    <button
+                      type="button"
+                      className="nb-btn"
+                      onClick={() => openGoogleCalendar(latest)}
+                    >
+                      <FaCalendarPlus /> Calendar
+                    </button>
                   </div>
                 </div>
               ) : (
-                !loading && <div className="nb-empty">No notice available yet.</div>
+                !loading && (
+                  <div className="nb-empty">No notice available yet.</div>
+                )
               )}
 
               <div className="nb-grid">
