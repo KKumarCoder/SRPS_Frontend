@@ -14,7 +14,7 @@ const T = {
   en: {
     schoolName1: "Shree Ram",
     schoolName2: "Public School",
-    affiliation: "Affiliated to CBSE, New Delhi",
+    affiliation: "Affiliated to CBSE",
     nav: [
       "NCC",
       "The School",

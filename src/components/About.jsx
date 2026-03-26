@@ -18,7 +18,7 @@ const About = () => {
           <p className="text-gray-700 mb-4">
             Shree Ram Public School is a premier educational institution,
             established in 2012, located in the peaceful village of Kanhra,
-            Charkhi Dadri. Our campus is spread over 2 acres with a focus on
+            Charkhi Dadri. Our campus is spread over 3 acres with a focus on
             holistic education. We are affiliated with CBSE and consistently
             ranked among the top schools in the region.
           </p>

@@ -7,12 +7,11 @@ import { ArrowRight, MapPin, Sparkles } from "lucide-react";
 const SLIDES = [
   {
     src: "/School_pic/NCC_Pic_Primnester_29.JPEG",
-   
   },
-  { src: "/School_pic/IMG_31.JPG",  },
-  { src: "/School_pic/NCC_Pic_35.JPEG",},
-  { src: "/School_pic/NCC_Pic_Primenester_30.JPG",  },
-  { src: "/School_pic/NCC-Pic_39.JPG",  },
+  { src: "/School_pic/IMG_31.JPG" },
+  { src: "/School_pic/NCC_Pic_35.JPEG" },
+  { src: "/School_pic/NCC_Pic_Primenester_30.JPG" },
+  { src: "/School_pic/NCC-Pic_39.JPG" },
 ];
 
 /* ── Stats ── */
@@ -175,8 +174,6 @@ export default function Hero() {
       ════════════════════════════════ */}
       <div className="relative z-10 h-full flex items-center px-6 md:px-16 lg:px-24 max-w-3xl">
         <div className="w-full mt-10">
-       
-
           {/* Headline with animated underline + typing effect */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -221,11 +218,12 @@ export default function Hero() {
             className="mt-6 text-lg md:text-xl text-white/80 max-w-xl leading-relaxed"
           >
             Shree Ram Public School — where{" "}
-            <span className="text-amber-300 font-semibold">
-              Atal Tinkering Labs
+            <span className="text-amber-400 font-semibold">
+              Innovate. Create. Lead.
             </span>
-            , world-class sports, and academic excellence meet to build
-            confident leaders.
+            Igniting young minds through innovation, world-class infrastructure,
+            and academic excellence — building the confident leaders of
+            tomorrow.
           </motion.p>
 
           {/* CTA Buttons */}
