@@ -19,7 +19,7 @@ const Amenities = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-4">Creating the Perfect Learning Environment</h2>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          At Shree Ram Public School, we take great pride in providing our students with a diverse range of modern, well-equipped facilities designed to support both academic excellence and personal growth.
+          At Shree Ram Public School, we take great pride in providing our students with a diverse range of modern, well-equipped facilitie designed to support both academic excellence and personal growth.
         </p>
 
         <div ref={ref} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
