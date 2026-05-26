@@ -84,6 +84,23 @@ const documents = [
     title: "Water, Health and Sanitation Certificates",
     filename: "COPIES OF VALID WATER, HEALTH AND SANITATION CERTIFICATES.pdf",
   },
+
+  {
+    title: "SELF - CERTIFICATION PROFORMA",
+    filename: "SELF___CERTIFICATION_PROFOR .jpg",
+  },
+  {
+    title: "Drink_Water_Cirtification",
+    filename: "Drink_Water_Cirtification.jpg",
+  },
+  {
+    title: "Prents Teachers Association(",
+    filename: "PTA.jpg",
+  },
+  {
+    title: "SMC MEMBERS",
+    filename: "SMC.jpg",
+  },
 ];
 
 const staffData = [
