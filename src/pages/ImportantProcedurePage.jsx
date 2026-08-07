@@ -325,40 +325,40 @@ export default function ImportantProcedurePage() {
                 <tr>
                   <th>Class</th>
                   <th>Tuition Fee (Monthly)</th>
-                  <th>Annual Fee</th>
+                  <th>Exam Fee</th>
                   <th>Total Annual</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Nursery - KG</td>
-                  <td>₹1,800</td>
-                  <td>₹5,000</td>
-                  <td>₹26,600</td>
+                  <td>₹22,00</td>
+                  <td>₹22,00</td>
+                  <td>₹28,00</td>
                 </tr>
                 <tr>
                   <td>Class I - V</td>
-                  <td>₹2,200</td>
-                  <td>₹6,000</td>
-                  <td>₹32,400</td>
+                  <td>₹3,000 </td>
+                  <td>₹34,00</td>
+                  <td>₹39,400</td>
                 </tr>
                 <tr>
                   <td>Class VI - VIII</td>
-                  <td>₹2,500</td>
-                  <td>₹7,000</td>
-                  <td>₹37,000</td>
+                  <td>₹3600</td>
+                  <td>₹4800</td>
+                  <td>₹48,000</td>
                 </tr>
                 <tr>
                   <td>Class IX - X</td>
-                  <td>₹2,800</td>
-                  <td>₹8,000</td>
-                  <td>₹41,600</td>
+                  <td>₹45,00</td>
+                  <td>₹67,00</td>
+                  <td>₹60,700</td>
                 </tr>
                 <tr>
                   <td>Class XI - XII</td>
-                  <td>₹3,200</td>
-                  <td>₹10,000</td>
-                  <td>₹48,400</td>
+                  <td>₹6,000</td>
+                  <td>₹8,000</td>
+                  <td>₹80,000</td>
                 </tr>
               </tbody>
             </table>
@@ -444,10 +444,13 @@ export default function ImportantProcedurePage() {
                   <FaExclamationTriangle /> Important Dates
                 </h3>
                 <ul>
-                  <li>Admission Form Available: January</li>
+                  <li>Admission Form Available: 1 Dec </li>
                   <li>Last Date to Apply: March 31</li>
                   <li>Session Begins: April 1</li>
-                  <li>Parent Teacher Meeting: Last Saturday of every month</li>
+                  <li>
+                    Parent Teacher Meeting: Second Saturday of every month/Last
+                    Day Of Every Month
+                  </li>
                 </ul>
               </motion.div>
               <motion.div
@@ -462,9 +465,9 @@ export default function ImportantProcedurePage() {
                 </h3>
                 <ul>
                   <li>Gate Opens: 7:30 AM</li>
-                  <li>Assembly: 7:45 AM</li>
-                  <li>School Closes: 1:00 PM</li>
-                  <li>Office Hours: 8:00 AM - 2:00 PM</li>
+                  <li>Assembly: 8:15 AM</li>
+                  <li>School Closes: 2:30 PM</li>
+                  <li>Office Hours: 8:00 AM - 3:00 PM</li>
                 </ul>
               </motion.div>
             </div>
@@ -484,11 +487,11 @@ export default function ImportantProcedurePage() {
               Contact our admission office for any queries regarding procedures.
             </p>
             <div className="contact-links">
-              <a href="tel:+919876543210">
-                <FaPhone /> +91 98765 43210
+              <a href="tel:+91 8199991081">
+                <FaPhone /> +91 8199991081
               </a>
-              <a href="mailto:info@shreerampublicschool.com">
-                <FaEnvelope /> info@shreerampublicschool.com
+              <a href="srpskanhra@gmail.com">
+                <FaEnvelope /> srpskanhra@gmail.com
               </a>
             </div>
           </motion.div>

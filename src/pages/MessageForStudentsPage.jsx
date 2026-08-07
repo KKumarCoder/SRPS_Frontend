@@ -193,7 +193,7 @@ export default function MessageForStudentsPage() {
                   Believe in yourself. You are capable of achieving great
                   things!
                 </p>
-                <div className="msg-sign">Mrs. Sunita Sharma</div>
+                <div className="msg-sign">Mr. Amit </div>
                 <div className="msg-role">
                   Principal, Shree Ram Public School
                 </div>
@@ -204,10 +204,7 @@ export default function MessageForStudentsPage() {
                 animate={v1 ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <img
-                  src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80"
-                  alt="Students"
-                />
+                <img src="Amit_SIR.jpg" alt="Students" />
               </motion.div>
             </div>
           </div>

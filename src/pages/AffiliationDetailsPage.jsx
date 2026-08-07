@@ -12,8 +12,8 @@ const AFFILIATION_INFO = {
   address:
     "Village Kanhra, Post Office - Kanhra, District Muzaffarnagar, Uttar Pradesh - 251001",
   affiliation: "Central Board of Secondary Education (CBSE)",
-  affiliationNo: "531526",
-  schoolCode: "62614",
+  affiliationNo: "532046",
+  schoolCode: "42056",
   board: "CBSE, New Delhi",
   streams: ["Science (PCM)", "Science (PCB)", "Commerce", " Humanities"],
   languages: ["English", "Hindi", "Sanskrit"],
@@ -25,7 +25,7 @@ const AFFILIATION_INFO = {
 const DOCUMENTS = [
   { name: "Affiliation Certificate", status: "Valid", expiry: "2027" },
   { name: "Recognition Certificate", status: "Valid", expiry: "N/A" },
-  { name: "Fire Safety Certificate", status: "Valid", expiry: "2025" },
+  { name: "Fire Safety Certificate", status: "Valid", expiry: "2026" },
   { name: "Building Safety Certificate", status: "Valid", expiry: "2026" },
   { name: "Water & Sanitation Certificate", status: "Valid", expiry: "2026" },
   { name: "Society Registration", status: "Valid", expiry: "Perpetual" },

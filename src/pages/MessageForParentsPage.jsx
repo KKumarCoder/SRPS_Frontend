@@ -151,10 +151,7 @@ export default function MessageForParentsPage() {
                 animate={v1 ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6 }}
               >
-                <img
-                  src="https://randomuser.me/api/portraits/women/68.jpg"
-                  alt="Principal"
-                />
+                <img src="Amit_SIR.jpg" alt="Principal" />
               </motion.div>
               <motion.div
                 className="msg-content"
@@ -186,7 +183,7 @@ export default function MessageForParentsPage() {
                   Together, we can shape responsible, compassionate, and
                   successful individuals who will make their mark on the world.
                 </p>
-                <div className="msg-sign">Mrs. Sunita Sharma</div>
+                <div className="msg-sign">Mr. Amit </div>
                 <div className="msg-role">
                   Principal, Shree Ram Public School
                 </div>

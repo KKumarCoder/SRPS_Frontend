@@ -31,7 +31,7 @@ const generalInfo = [
   { label: "School Code", value: "42056", icon: "🔢" },
   {
     label: "Complete Address",
-    value: "Kanhra-Badhra, Charkhi Dadri, Haryana — 127308",
+    value: "Kanhra-Badhra (Charkhi Dadri), Haryana — 127312",
     icon: "📍",
   },
   {
@@ -39,7 +39,7 @@ const generalInfo = [
     value: "Mr. Amit — M.Sc., B.Ed",
     icon: "👨‍🏫",
   },
-  { label: "School Email ID", value: "42056@cbseshiksha.in", icon: "📧" },
+  { label: "School Email ID", value: "srpskanhra@gmail.com", icon: "📧" },
   {
     label: "Contact Details",
     value: "01252-299999 | 8199991081–84",
@@ -78,8 +78,8 @@ const documents = [
     filename:
       "COPY OF VALID FIRE SAFETY CERTIFICATE ISSUED BY THE COMPETENT AUTHORITY.pdf",
   },
-  { title: "Calendar 24-25", filename: "CALENDER  24-25.pdf" },
-  { title: "Fees Structure", filename: "Fees structure.pdf" },
+  { title: "Calendar 26-27", filename: "CALENDER  25-26.pdf" },
+  { title: "Fees Structure", filename: "Fee_Structure2026.pdf" },
   {
     title: "Water, Health and Sanitation Certificates",
     filename: "COPIES OF VALID WATER, HEALTH AND SANITATION CERTIFICATES.pdf",
@@ -90,12 +90,8 @@ const documents = [
     filename: "SELF___CERTIFICATION_PROFOR .jpg",
   },
   {
-    title: "Drink_Water_Cirtification",
-    filename: "Drink_Water_Cirtification.jpg",
-  },
-  {
-    title: "Prents Teachers Association(",
-    filename: "PTA.jpg",
+    title: "Parents Teachers Association",
+    filename: "PTA.png",
   },
   {
     title: "SMC MEMBERS",
@@ -681,7 +677,7 @@ export default function MandatoryDisclosure() {
                 className="w-2 h-2 rounded-full animate-pulse"
                 style={{ background: T.gold }}
               />
-              CBSE Affiliated · Since 2012
+              CBSE Affiliated
             </div>
 
             <h1
@@ -761,7 +757,7 @@ export default function MandatoryDisclosure() {
               ))}
               <div className="relative shield-float">
                 <img
-                  src="/mnt/user-data/uploads/1771783385821_image.png"
+                  src="/logo.jpg"
                   alt="Shree Ram Public School Logo"
                   className="rounded-2xl shadow-2xl"
                   style={{

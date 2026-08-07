@@ -85,13 +85,13 @@ const fees = [
 const importantDates = [
   {
     event: "Application Start",
-    date: "1 Dec 2025",
+    date: "1 Dec 2026",
     icon: "🚀",
     color: T.tealLight,
   },
   {
     event: "Application Deadline",
-    date: "31 Mar 2026",
+    date: "31 May 2026",
     icon: "📅",
     color: T.gold,
   },
@@ -452,7 +452,7 @@ export default function AdmissionsPage() {
                 className="w-2 h-2 rounded-full animate-pulse"
                 style={{ background: T.gold }}
               />
-              Admissions Open 2026–27
+              Admissions Open 2027–28
             </div>
             <h1
               className="leading-tight mb-4 drop-shadow-xl"
@@ -520,14 +520,14 @@ export default function AdmissionsPage() {
                 cl: "float1",
               },
               {
-                v: "2026–27",
+                v: "2027–28",
                 l: "Academic Session",
                 bg: "white",
                 tc: T.teal,
                 cl: "float2",
               },
               {
-                v: "1 Dec 2025",
+                v: "1 Dec 2026",
                 l: "Applications Start From",
                 bg: T.tealLight,
                 tc: "white",
@@ -999,7 +999,7 @@ export default function AdmissionsPage() {
                 {
                   icon: "📧",
                   label: "Email",
-                  val: "admissions@srpskanhra.com",
+                  val: "srpskanhra@gmail.com",
                 },
                 { icon: "📍", label: "Office", val: "Mon–Sat, 9 AM – 3 PM" },
               ].map((c, i) => (
