@@ -166,6 +166,8 @@ const LOGO_TEAL = "#1a6b7a"; /* teal from shield background */
 const LOGO_ORANGE = "#d4883a"; /* warm orange from book/circle */
 const LOGO_BLUE = "#1a5276"; /* deep navy-blue for "Public School" */
 
+const ERP_LOGIN_URL = "https://shreerampublicschool.1schoolerp.com/";
+
 const NAV_COLORS = [
   { color: "#5cb85c", glow: "rgba(92,184,92,0.4)" },
   { color: "#e05a4e", glow: "rgba(224,90,78,0.4)" },
@@ -755,6 +757,151 @@ const Header = () => {
         }
         .srps-lang-pill:hover { background: rgba(255,255,255,0.3); transform:scale(1.05); }
 
+        .srps-portal-group {
+          display:flex;
+          align-items:center;
+          gap:8px;
+          padding: 5px 7px;
+          border-radius: 999px;
+          background: rgba(255,255,255,0.12);
+          border: 1px solid rgba(255,255,255,0.20);
+          box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+        }
+
+        .srps-portal-badge {
+          display:flex;
+          align-items:center;
+          gap:6px;
+          padding: 0 8px 0 6px;
+          color: rgba(255,255,255,0.92);
+          font-size: 10.5px;
+          font-weight: 900;
+          letter-spacing: 0.7px;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .srps-portal-icon {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          background: rgba(255,255,255,0.18);
+          box-shadow: inset 0 1px 2px rgba(255,255,255,0.22);
+        }
+
+        .srps-erp-pill {
+          position: relative;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          gap:7px;
+          padding: 6px 14px;
+          border-radius: 999px;
+          color: white;
+          font-size: 11.5px;
+          font-weight: 800;
+          font-family:'Nunito',sans-serif;
+          text-decoration:none;
+          white-space:nowrap;
+          letter-spacing:0.15px;
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,0.22);
+          background: linear-gradient(135deg, rgba(255,255,255,0.26), rgba(255,255,255,0.10));
+          box-shadow: 0 8px 18px rgba(0,0,0,0.12), inset 0 1px 1px rgba(255,255,255,0.16);
+          transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+          isolation: isolate;
+        }
+        .srps-erp-pill::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(120deg, transparent 18%, rgba(255,255,255,0.34) 50%, transparent 82%);
+          transform: translateX(-130%);
+          transition: transform 0.65s ease;
+          z-index: 0;
+        }
+        .srps-erp-pill:hover::before {
+          transform: translateX(130%);
+        }
+        .srps-erp-pill:hover {
+          transform: translateY(-2px) scale(1.03);
+          border-color: rgba(255,255,255,0.45);
+          background: #000;
+          box-shadow: 0 12px 24px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.08) inset;
+        }
+        .srps-erp-pill span,
+        .srps-erp-pill svg {
+          position: relative;
+          z-index: 1;
+        }
+        .srps-erp-pill svg {
+          opacity: 0.92;
+          flex-shrink: 0;
+        }
+
+        @media(max-width:1240px){
+          .srps-portal-badge { display:none; }
+          .srps-top-actions { gap:8px !important; }
+        }
+
+        @media(max-width:1180px){
+          .srps-portal-group { gap:6px; padding:4px 5px; }
+          .srps-erp-pill { padding:5px 10px; font-size:10.5px; gap:5px; }
+          .srps-top-actions { gap:6px !important; }
+        }
+
+        @media(max-width:820px){
+          .srps-top-clock { display:none; }
+          .srps-topbar {
+            min-height: auto;
+            height: auto !important;
+            padding: 8px 10px !important;
+            justify-content: flex-end !important;
+            align-items: center !important;
+          }
+          .srps-top-actions {
+            width: 100%;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+          }
+          .srps-portal-group {
+            width: 100%;
+            justify-content: center;
+            border-radius: 18px;
+          }
+          .srps-erp-pill {
+            flex: 1 1 calc(33.333% - 8px);
+            min-width: 94px;
+            padding: 7px 8px;
+            font-size: 10px;
+          }
+          .srps-lang-pill { padding:3px 8px; font-size:10px; }
+        }
+
+        @media(max-width:520px){
+          .srps-portal-group {
+            display:grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap:6px;
+            padding: 6px;
+          }
+          .srps-erp-pill {
+            min-width: 0;
+            border-radius: 14px;
+            padding: 8px 6px;
+            font-size: 9.5px;
+          }
+          .srps-erp-pill svg {
+            width: 11px;
+            height: 11px;
+          }
+        }
+
         /* school name shimmer on hover */
         .srps-name-shimmer:hover .srps-n1 { opacity:0.85; }
         .srps-name-shimmer:hover .srps-n2 { opacity:0.85; }
@@ -782,6 +929,7 @@ const Header = () => {
       >
         {/* ══ ANIMATED GRADIENT TOP BAR ══ */}
         <div
+          className="srps-topbar"
           style={{
             height: "44px",
             background:
@@ -794,9 +942,102 @@ const Header = () => {
             padding: "0 28px",
           }}
         >
-          <LiveClock lang={lang} />
+          <div className="srps-top-clock">
+            <LiveClock lang={lang} />
+          </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div
+            className="srps-top-actions"
+            style={{ display: "flex", alignItems: "center", gap: "10px" }}
+          >
+            <div className="srps-portal-group">
+              <div className="srps-portal-badge">
+                <span className="srps-portal-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="11"
+                    height="11"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M4 7h16" />
+                    <path d="M7 3h10" />
+                    <rect x="3" y="7" width="18" height="14" rx="3" />
+                    <path d="M8 12h8" />
+                    <path d="M8 16h5" />
+                  </svg>
+                </span>
+                ERP PORTAL
+              </div>
+
+              <a
+                href={ERP_LOGIN_URL}
+                className="srps-erp-pill"
+                aria-label="Student Login"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="12"
+                  height="12"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" />
+                  <path d="M5 20a7 7 0 0 1 14 0" />
+                </svg>
+                <span>Student Login</span>
+              </a>
+              <a
+                href={ERP_LOGIN_URL}
+                className="srps-erp-pill"
+                aria-label="Parents Login"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="12"
+                  height="12"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M7 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3Z" />
+                  <path d="M17 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3Z" />
+                  <path d="M2.5 19a5.5 5.5 0 0 1 9 0" />
+                  <path d="M12.5 19a5.5 5.5 0 0 1 9 0" />
+                </svg>
+                <span>Parents Login</span>
+              </a>
+              <a
+                href={ERP_LOGIN_URL}
+                className="srps-erp-pill"
+                aria-label="Staff Login"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="12"
+                  height="12"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="4" y="4" width="16" height="16" rx="3" />
+                  <path d="M8 9h8" />
+                  <path d="M8 13h8" />
+                  <path d="M8 17h5" />
+                </svg>
+                <span>Staff Login</span>
+              </a>
+            </div>
             {isAdminLoggedIn() ? (
               <>
                 <Link

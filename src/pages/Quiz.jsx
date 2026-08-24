@@ -1,4 +1,5 @@
 import React from "react";
+import { useContact } from "../contexts/ContactContext.jsx";
 import { motion } from "framer-motion";
 import {
   FaFlask,
@@ -19,6 +20,7 @@ import {
 } from "react-icons/fa";
 
 const Quiz = () => {
+  const { openModal } = useContact();
   // Animation variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 60 },
@@ -141,6 +143,8 @@ const Quiz = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                type="button"
+                onClick={openModal}
                 className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition"
               >
                 Enroll Now
@@ -457,8 +461,6 @@ const Quiz = () => {
           </motion.button>
         </div>
       </motion.section>
-
-     
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
   FaQuoteLeft,
   FaSchool,
 } from "react-icons/fa";
+import { useContact } from "../contexts/ContactContext.jsx";
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  GLOBAL CSS
@@ -105,6 +106,7 @@ function useA() {
 //  MAIN PAGE
 // ═══════════════════════════════════════════════════════════════════════════
 export default function VisionMissionPage() {
+  const { openModal } = useContact();
   const [r1, v1] = useA();
   const [r2, v2] = useA();
 
@@ -283,8 +285,9 @@ export default function VisionMissionPage() {
               Experience the Shree Ram difference and give your child the gift
               of quality education.
             </p>
-            <a
-              href="/admissions"
+            <button
+              type="button"
+              onClick={openModal}
               style={{
                 display: "inline-block",
                 background: "var(--g)",
@@ -299,7 +302,7 @@ export default function VisionMissionPage() {
               }}
             >
               Enquire Now
-            </a>
+            </button>
           </motion.div>
         </section>
 

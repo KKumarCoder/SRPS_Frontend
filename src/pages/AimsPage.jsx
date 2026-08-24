@@ -11,6 +11,7 @@ import {
   FaCheckCircle,
   FaArrowRight,
 } from "react-icons/fa";
+import { useContact } from "../contexts/ContactContext.jsx";
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  GLOBAL CSS
@@ -112,6 +113,7 @@ function useA() {
 
 // ═══════════════════════════════════════════════════════════════════════════
 export default function AimsPage() {
+  const { openModal } = useContact();
   const [r1, v1] = useA();
   const [r2, v2] = useA();
 
@@ -310,8 +312,9 @@ export default function AimsPage() {
               Join Shree Ram Public School and help us shape a brighter future
               for the next generation.
             </p>
-            <a
-              href="/admissions"
+            <button
+              type="button"
+              onClick={openModal}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -328,7 +331,7 @@ export default function AimsPage() {
               }}
             >
               Enquire Now <FaArrowRight />
-            </a>
+            </button>
           </motion.div>
         </section>
 

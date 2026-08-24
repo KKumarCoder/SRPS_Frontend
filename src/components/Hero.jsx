@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useContact } from "../contexts/ContactContext.jsx";
 import { ArrowRight, MapPin, Sparkles } from "lucide-react";
 
 /* ── Image paths ── */
@@ -69,6 +70,7 @@ const TypedRotatingWord = () => {
 
 export default function Hero() {
   const [idx, setIdx] = useState(0);
+  const { openModal } = useContact();
 
   // Auto-advance slides
   useEffect(() => {
@@ -233,8 +235,9 @@ export default function Hero() {
             transition={{ delay: 0.5, duration: 0.7 }}
             className="mt-10 flex flex-wrap gap-4"
           >
-            <Link
-              to="/admissions"
+            <button
+              type="button"
+              onClick={openModal}
               className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 font-bold text-slate-900 shadow-lg shadow-amber-600/30 transition-all hover:shadow-xl hover:shadow-amber-600/40 hover:scale-105 active:scale-100"
             >
               <span className="relative z-10 flex items-center gap-2">
@@ -245,7 +248,7 @@ export default function Hero() {
                 />
               </span>
               <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
-            </Link>
+            </button>
 
             <Link
               to="/campus"
