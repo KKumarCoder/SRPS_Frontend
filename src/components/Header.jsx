@@ -994,7 +994,7 @@ const Header = () => {
                 <span>Student Login</span>
               </a>
               <a
-                href={ERP_LOGIN_URL}
+                href="https://play.google.com/store/apps/details?id=com.oneschool.erp"
                 className="srps-erp-pill"
                 aria-label="Parents Login"
               >
