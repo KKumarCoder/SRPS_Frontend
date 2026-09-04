@@ -13,6 +13,7 @@ import CareersPage from "./pages/CareersPage.jsx";
 import PhotoGalleryPage from "./pages/PhotoGalleryPage.jsx";
 import VideoGalleryPage from "./pages/VideoGalleryPage.jsx";
 import NCCPage from "./pages/NCC.jsx";
+import ScoutGuidePage from "./pages/ScoutGuidePage.jsx";
 
 // New School Nav Pages
 import VisionMissionPage from "./pages/VisionMissionPage.jsx";
@@ -73,6 +74,7 @@ export function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/careers" element={<CareersPage />} />
         <Route path="/ncc" element={<NCCPage />} />
+        <Route path="/scout-guide" element={<ScoutGuidePage />} />
         <Route path="/gallery" element={<PhotoGalleryPage />} />
         <Route path="/photo-gallery" element={<PhotoGalleryPage />} />
         <Route path="/video-gallery" element={<VideoGalleryPage />} />

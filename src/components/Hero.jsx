@@ -17,9 +17,9 @@ const SLIDES = [
 
 /* ── Stats ── */
 const STATS = [
-  { num: "2,500+", label: "Students" },
+  { num: "1200+", label: "Students" },
   { num: "98%", label: "Board Results" },
-  { num: "12+", label: "Years Legacy" },
+  { num: "14+", label: "Years Legacy" },
   { num: "50+", label: "Activities" },
 ];
 

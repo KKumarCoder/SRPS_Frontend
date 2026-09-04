@@ -4,25 +4,25 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const testimonials = [
   {
-    name: "Mrs. Aakansha Gupta",
+    name: "Mrs. Meenakshi",
     role: "Parent",
     content:
-      "Choosing Shree Ram Public School was the best decision we made for our daughter. The personalized attention she receives has helped her thrive both academically and socially. We’re so grateful for the caring teachers and staff!",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
+      "Choosing Shree Ram Public School was the best decision we made for our son. The personalized attention he receives has helped him thrive both academically and socially. We’re so grateful for the caring teachers and staff!",
+    image: "/public/testimonialsImg/MEENAKSHI.png",
   },
   {
-    name: "Mr. Rajesh Sharma",
+    name: "Mrs. Manju Sangwan",
     role: "Parent",
     content:
       "The school provides an excellent environment for holistic development. My son has become more confident and loves going to school every day.",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    image: "/public/testimonialsImg/Manju_Sangwan_.jpg",
   },
   {
-    name: "Ms. Priya Singh",
+    name: "Mrs. Shiwani",
     role: "Student (Class X)",
     content:
       "I have been here since nursery. The teachers are very supportive and the facilities are top-notch. I feel prepared for my future.",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    image: "/public/testimonialsImg/Shiwani.jpg",
   },
 ];
 

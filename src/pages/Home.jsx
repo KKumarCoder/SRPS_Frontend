@@ -5,7 +5,6 @@ import WhyUs from "../components/ Why_Us.jsx";
 import About from "../components/About.jsx";
 import Amenities from "../components/Amenities.jsx";
 import Testimonials from "../components/Testimonials.jsx";
-import Notices from "../components/Notices.jsx";
 import Map from "../components/Map.jsx";
 import ATLSection from "../components/ATLSection.jsx";
 import PrincipalDesk from "../components/PrincipalDesk.jsx";
@@ -368,8 +367,7 @@ const Home = () => {
       <Amenities />
       <PrincipalDesk />
       <Testimonials />
-      <Notices />
-      <HomeEnhancements />
+
       <Map />
     </>
   );

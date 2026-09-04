@@ -93,7 +93,7 @@ const ATLSection = () => {
             {/* Floating Badge */}
             <div className="absolute -bottom-6 -left-6 bg-[#155E75] text-white px-6 py-4 rounded-2xl shadow-lg">
               <p className="text-xs uppercase tracking-wider">Established</p>
-              <p className="text-xl font-bold text-[#E6B87A]">Since 2012</p>
+              <p className="text-xl font-bold text-[#E6B87A]">Since 2018</p>
             </div>
 
             {/* Decorative Rocket */}

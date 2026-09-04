@@ -210,11 +210,12 @@ const Footer = () => {
               </div>
               <div className="contact-item">
                 <FiPhone className="contact-icon" size={14} />
-                <span>+91 12345 67890</span>
+                <span>01252299999</span>
+                <span>8199991081-84</span>
               </div>
               <div className="contact-item">
                 <FiMail className="contact-icon" size={14} />
-                <span>info@srpskanhra.com</span>
+                <span>srpskanhra@gmail.com </span>
               </div>
 
               {/* Get In Touch CTA */}

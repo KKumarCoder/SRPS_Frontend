@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useContact } from "../contexts/ContactContext.jsx";
 import {
   clearAdminSession,
   getAdminEmail,
@@ -17,6 +16,7 @@ const T = {
     affiliation: "Affiliated to CBSE",
     nav: [
       "NCC",
+      "Scout Guide",
       "The School",
       "About Us",
       "Academics",
@@ -24,6 +24,7 @@ const T = {
       "Gallery",
     ],
     dropdowns: [
+      [],
       [],
       [
         "Admissions",
@@ -76,11 +77,10 @@ const T = {
       ["Photo Gallery", "Video Gallery"],
     ],
     notices: [
-      "🎉 Annual Sports Day – March 15, 2025 | All students must participate",
+      "🎉 Annual Sports Day – Nov 14, 2026 | All students must participate",
       "📚 Exam Schedule for Class X & XII now available – Check Downloads",
-      "🏆 Congratulations to our toppers of Board Exams 2024!",
-      "📝 Admission Open for Session 2025–26 | Limited Seats Available",
-      "🎨 Inter-School Art Competition on March 20 – Register Now",
+      "🏆 Congratulations to our toppers of Board Exams 2026!",
+      "📝 Admission Open for Session 2027–28 | Limited Seats Available",
     ],
     langBtn: "हिंदी",
     noticeLabel: "Notice",
@@ -91,6 +91,7 @@ const T = {
     affiliation: "सीबीएसई, नई दिल्ली से संबद्ध",
     nav: [
       "एनसीसी",
+      "स्काउट गाइड",
       "विद्यालय",
       "हमारे बारे में",
       "शैक्षणिक",
@@ -98,6 +99,7 @@ const T = {
       "गैलरी",
     ],
     dropdowns: [
+      [],
       [],
       [
         "प्रवेश",
@@ -170,6 +172,7 @@ const ERP_LOGIN_URL = "https://shreerampublicschool.1schoolerp.com/";
 
 const NAV_COLORS = [
   { color: "#5cb85c", glow: "rgba(92,184,92,0.4)" },
+  { color: "#1a6b7a", glow: "rgba(26,107,122,0.4)" },
   { color: "#e05a4e", glow: "rgba(224,90,78,0.4)" },
   { color: "#3eb5e5", glow: "rgba(62,181,229,0.4)" },
   { color: "#9b59b6", glow: "rgba(155,89,182,0.4)" },
@@ -191,6 +194,21 @@ const NAV_ICONS = [
   >
     <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" />
     <path d="M9 21V12h6v9" />
+  </svg>,
+  <svg
+    key="scout"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="white"
+    strokeWidth="2.1"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width="19"
+    height="19"
+  >
+    <circle cx="12" cy="12" r="9" />
+    <path d="m16 8-2.7 5.3L8 16l2.7-5.3L16 8Z" />
+    <circle cx="12" cy="12" r="1" fill="white" />
   </svg>,
   <svg
     key="schl"
@@ -670,10 +688,11 @@ const Header = () => {
   const [adminEmail, setAdminEmail] = useState(getAdminEmail());
   const headerRef = useRef(null);
   const timerRef = useRef(null);
-  const { openModal } = useContact();
   const t = T[lang];
 
   useEffect(() => {
+    // The header stays mounted across routes; refresh externally stored auth state.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAdminEmail(getAdminEmail());
   }, [location.pathname]);
 
@@ -1275,16 +1294,20 @@ const Header = () => {
               {t.nav.map((name, i) => {
                 const { color, glow } = NAV_COLORS[i];
                 const items = t.dropdowns[i];
-                const isActive = activeNav === name;
                 // Set path for nav items
                 let path = "#";
                 if (name === "NCC" || name === "एनसीसी") path = "/ncc";
+                else if (name === "Scout Guide" || name === "स्काउट गाइड")
+                  path = "/scout-guide";
                 else if (name === "About Us" || name === "हमारे बारे में")
                   path = "/about";
                 else if (name === "Academics" || name === "शैक्षणिक")
                   path = "/academic";
                 else if (name === "Gallery" || name === "गैलरी")
                   path = "/photo-gallery";
+                const isActive =
+                  activeNav === name ||
+                  (path !== "#" && location.pathname === path);
                 // Add more as needed
                 return (
                   <div
@@ -1304,7 +1327,7 @@ const Header = () => {
                     )}
                     <div
                       style={{ position: "relative" }}
-                      onMouseEnter={() => items.length && onEnter(name)}
+                      onMouseEnter={() => onEnter(name)}
                       onMouseLeave={onLeave}
                     >
                       {path !== "#" ? (
@@ -1455,21 +1478,36 @@ const Header = () => {
                 const { color, glow } = NAV_COLORS[i];
                 const items = t.dropdowns[i];
                 const expanded = mobileExpanded === name;
+                let mobilePath = "#";
+                if (name === "NCC" || name === "एनसीसी") mobilePath = "/ncc";
+                else if (name === "Scout Guide" || name === "स्काउट गाइड")
+                  mobilePath = "/scout-guide";
+                else if (name === "About Us" || name === "हमारे बारे में")
+                  mobilePath = "/about";
+                else if (name === "Academics" || name === "शैक्षणिक")
+                  mobilePath = "/academic";
+                else if (name === "Gallery" || name === "गैलरी")
+                  mobilePath = "/photo-gallery";
+                const MobileRow = items.length ? "div" : Link;
+                const mobileRouteActive =
+                  mobilePath !== "#" && location.pathname === mobilePath;
                 return (
                   <div key={name} style={{ borderBottom: "1px solid #f7f7f7" }}>
-                    <div
-                      onClick={() =>
-                        items.length &&
-                        setMobileExpanded(expanded ? null : name)
-                      }
+                    <MobileRow
+                      {...(!items.length ? { to: mobilePath } : {})}
+                      onClick={() => {
+                        if (items.length) setMobileExpanded(expanded ? null : name);
+                        else setMobileOpen(false);
+                      }}
                       style={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                         padding: "13px 20px",
                         cursor: items.length ? "pointer" : "default",
-                        background: expanded ? `${color}0d` : "transparent",
+                        background: expanded || mobileRouteActive ? `${color}0d` : "transparent",
                         transition: "background 0.2s",
+                        textDecoration: "none",
                       }}
                     >
                       <div
@@ -1498,7 +1536,7 @@ const Header = () => {
                           style={{
                             fontWeight: "700",
                             fontSize: "14.5px",
-                            color: expanded ? color : "#1e3a5f",
+                            color: expanded || mobileRouteActive ? color : "#1e3a5f",
                             transition: "color 0.2s",
                           }}
                         >
@@ -1534,7 +1572,7 @@ const Header = () => {
                           </svg>
                         </div>
                       )}
-                    </div>
+                    </MobileRow>
                     <div className={`srps-mob-acc ${expanded ? "open" : ""}`}>
                       <div
                         style={{
