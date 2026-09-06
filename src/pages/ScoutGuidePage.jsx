@@ -31,6 +31,7 @@ import {
   skills,
   scoutValues,
   valueCounters,
+  getScoutImageCandidates,
 } from "../components/scout-guide/scoutData.js";
 import "./ScoutGuidePage.css";
 
@@ -88,7 +89,11 @@ function PhotoPanel({ imageId, alt, className = "", eager = false }) {
   return (
     <div className={`sg-photo-panel ${className}`}>
       <ScoutImage
-        candidates={[encodeURI(`/Scout Guide pic/ScoutGuide${imageId}.png`)]}
+        candidates={
+          typeof imageId === "string"
+            ? [encodeURI(imageId)]
+            : getScoutImageCandidates(imageId)
+        }
         alt={alt}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
@@ -127,7 +132,7 @@ export default function ScoutGuidePage() {
     const previousTitle = document.title;
     document.title = "Scout & Guide | Shree Ram Public School";
     const description =
-      "Learn about Scout & Guide activities at Shree Ram Public School, including leadership, discipline, community service, adventure, outdoor skills and character development.";
+      "Learn how Hindustan Scouts & Guides Association programmes connect scouting, guiding, service, adventure, yoga, environmental care and leadership at Shree Ram Public School.";
     let meta = document.querySelector('meta[name="description"]');
     const oldDescription = meta?.getAttribute("content") ?? null;
     if (!meta) {
@@ -157,30 +162,34 @@ export default function ScoutGuidePage() {
             />
           </Reveal>
           <Reveal className="sg-about-copy" delay={0.1}>
-            <p className="sg-eyebrow">The spirit of the movement</p>
+            <p className="sg-eyebrow">About Hindustan Scouts &amp; Guides</p>
             <h2>
-              More Than an Activity — <em>A Way of Life</em>
+              Education for <em>Complete Development</em>
             </h2>
             <p>
-              The Bharat Scouts and Guides is a voluntary, non-political and
-              secular educational movement. It supports the physical,
-              intellectual, emotional, social and spiritual development of young
-              people.
+              Hindustan Scouts &amp; Guides Association is a non-political,
+              non-sectarian, non-communal and non-profit educational
+              organisation open to all. Its purpose is to support the mental,
+              physical and spiritual development of young people through
+              scouting and guiding.
             </p>
             <p>
-              Through practical experiences, young people learn to make sound
-              decisions, care for others and contribute with confidence.
+              The Association connects learning with community development,
+              social service, adventure, yoga, all-faith meditation,
+              environmental conservation, vocational skills, national
+              integration, patriotism, brotherhood, loyalty, discipline and
+              leadership.
             </p>
             <div className="sg-keywords">
               {[
-                "Character",
-                "Responsibility",
-                "Self-reliance",
-                "Citizenship",
-                "Service",
-                "Teamwork",
+                "Community development",
+                "Social service",
+                "Adventure",
+                "Yoga",
+                "Environmental care",
+                "National integration",
+                "Discipline",
                 "Leadership",
-                "Outdoor learning",
               ].map((item) => (
                 <span key={item}>
                   <Check size={14} />
@@ -198,7 +207,7 @@ export default function ScoutGuidePage() {
             eyebrow="Purpose with direction"
             title="Our"
             accent="Aim"
-            description="Scouting and Guiding helps young people become responsible, confident and capable individuals who contribute positively to community and nation."
+            description="Hindustan Scouts & Guides programmes develop capable, disciplined and service-minded citizens through progressive training and practical participation."
           />
           <div className="sg-card-grid sg-card-grid--three">
             {aims.map((item, index) => (
@@ -231,7 +240,7 @@ export default function ScoutGuidePage() {
             eyebrow="A shared foundation"
             title="Three Core"
             accent="Principles"
-            description="Inclusive principles that connect personal conviction with service and self-development."
+            description="The Association's promise joins duty to God or Dharma, duty to country, help to other people and obedience to the Scout/Guide Law."
           />
           <div className="sg-principle-grid">
             {principles.map((item, index) => (
@@ -260,7 +269,7 @@ export default function ScoutGuidePage() {
             eyebrow="History of the movement"
             title="A Journey Through"
             accent="Time"
-            description="From an experimental island camp to a national movement devoted to character and citizenship."
+            description="From the early Indian Scout movement to a national association committed to youth development, service and responsible citizenship."
           />
           <div className="sg-timeline">
             {historyEvents.map((event, index) => (
@@ -278,8 +287,8 @@ export default function ScoutGuidePage() {
             ))}
           </div>
           <p className="sg-source-note">
-            Historical dates and movement fundamentals are based on official
-            Bharat Scouts &amp; Guides resources.
+            Historical background is summarised from the official Hindustan
+            Scouts &amp; Guides Association About Us information.
           </p>
         </div>
       </section>
@@ -287,10 +296,10 @@ export default function ScoutGuidePage() {
       <section className="sg-section sg-growth">
         <div className="sg-container">
           <SectionHeading
-            eyebrow="Official programme progression"
+            eyebrow="Hindustan training progression"
             title="A Journey of"
             accent="Growth"
-            description="Age-appropriate experiences give every stage a clear purpose, motto and next step."
+            description="The Association's Prashikshan Yojna uses test cards, progressive stages, proficiency badges, camps and service to help members advance."
           />
           <div className="sg-growth-path">
             {ageGroups.map((group, index) => (
@@ -318,10 +327,10 @@ export default function ScoutGuidePage() {
       <section className="sg-section sg-section--navy">
         <div className="sg-container">
           <SectionHeading
-            eyebrow="The Scout / Guide method"
+            eyebrow="The Hindustan method"
             title="Learning Through"
             accent="Experience"
-            description="A progressive method turns values into action, reflection and lasting habits."
+            description="Promise, Law, good turns, patrol work, practical tests, yoga, outdoor training and service turn values into daily practice."
           />
           <div className="sg-method-flow">
             {methodItems.map(([label, icon], index) => (
@@ -347,22 +356,25 @@ export default function ScoutGuidePage() {
               A Promise Put <em>Into Practice</em>
             </h2>
             <p>
-              The official BSG Promise centres on duty to God or Dharma and
-              country, helping other people, and living by the Scout or Guide
-              Law. Its language is not rewritten here; these are the values the
-              official Law asks young people to practise.
+              Hindustan Scouts &amp; Guides Association asks members to make a
+              personal promise: to do their best, do their duty to God or Dharma
+              and country, help other people at all times, and obey the
+              Scout/Guide Law.
             </p>
             <div className="sg-official-note">
               <ShieldCheck />
               <span>
-                <b>Source-aligned summary</b> Official wording varies by section
-                and is available from The Bharat Scouts and Guides.
+                <b>Official programme reference</b> Training stages and
+                test-card requirements are published in the Association's
+                Prashikshan Yojna.
               </span>
             </div>
             <div className="sg-law-hero">
               <ScoutImage
                 candidates={[
-                  encodeURI("/Scout Guide pic/PromiseValuesHero.jpg"),
+                  encodeURI(
+                    "/Scout Guide pic/ScoutValue01_Trustworthiness.png",
+                  ),
                 ]}
                 alt="Scouts and Guides putting promise and values into practice"
                 loading="lazy"
@@ -380,7 +392,7 @@ export default function ScoutGuidePage() {
               >
                 <div className="sg-law-value-image">
                   <ScoutImage
-                    candidates={[encodeURI(value.image)]}
+                    candidates={[value.image]}
                     alt={value.alt}
                     loading="lazy"
                     decoding="async"
@@ -436,9 +448,9 @@ export default function ScoutGuidePage() {
               Adventure. Discipline. <em>Service.</em>
             </h2>
             <p>
-              A balanced Scout &amp; Guide learning programme may include
-              ceremonial, practical, outdoor, cultural and community-focused
-              experiences.
+              Hindustan Scouts &amp; Guides training combines ceremony and drill
+              with practical skills, outdoor learning, cultural participation,
+              yoga, all-faith meditation and community service.
             </p>
             <div className="sg-activity-cloud">
               {activities.map(([activity], index) => (
@@ -484,10 +496,10 @@ export default function ScoutGuidePage() {
               Service Before <em>Self</em>
             </h2>
             <p>
-              Service turns awareness into responsible action. Through
-              age-appropriate opportunities, students can learn empathy,
-              cooperation and respect for the communities and environments they
-              share.
+              Service is a core part of the Hindustan programme. Through
+              age-appropriate activities, students practise empathy, cooperation
+              and responsibility while contributing to their school, locality
+              and environment.
             </p>
             <ul>
               {[
@@ -527,8 +539,9 @@ export default function ScoutGuidePage() {
             Learning Beyond <em>Four Walls</em>
           </h2>
           <p>
-            Camping, hiking, trekking and nature exploration encourage
-            observation, endurance, self-reliance and outdoor teamwork.
+            Camps, hikes, treks and nature study build observation, endurance,
+            self-reliance and outdoor teamwork. The Association also includes
+            conservation and yoga in its progressive training approach.
           </p>
           <div>
             {[Mountain, TreePine, Users, Leaf].map((icon, index) => (
@@ -554,7 +567,7 @@ export default function ScoutGuidePage() {
             eyebrow="Lasting outcomes"
             title="Preparing Students"
             accent="Beyond the Classroom"
-            description="Scouting and Guiding develops qualities that continue to matter long after an activity ends."
+            description="Hindustan Scouts & Guides training connects personal discipline with service, practical capability and national integration."
           />
           <div className="sg-outcome-grid">
             {outcomes.map(([title, text, icon], index) => (
@@ -590,25 +603,23 @@ export default function ScoutGuidePage() {
       <section className="sg-section sg-school">
         <div className="sg-container sg-split">
           <Reveal className="sg-school-copy">
-            <p className="sg-eyebrow">Our educational philosophy</p>
+            <p className="sg-eyebrow">Hindustan Scouts &amp; Guides at SRPS</p>
             <h2>
               Scout &amp; Guide at <em>Shree Ram Public School</em>
             </h2>
             <p>
-              At SRPS, education is understood as the development of the whole
-              person. Academic learning is strengthened by experiences that
-              encourage discipline, initiative and thoughtful leadership.
+              At Shree Ram Public School, Scout &amp; Guide participation gives
+              students a practical setting in which to practise the values of
+              Hindustan Scouts &amp; Guides Association.
             </p>
             <p>
-              Scout &amp; Guide learning complements this philosophy by placing
-              responsibility, practical action and teamwork at the centre.
-              Students are encouraged to participate, reflect, help others and
-              grow into capable citizens.
+              Through training, drill, outdoor activities, good turns, service,
+              environmental care and teamwork, students learn to take
+              responsibility and contribute constructively.
             </p>
             <p>
-              These experiences connect classroom values with community
-              life—helping young people become prepared, compassionate and
-              confident.
+              The aim is not only participation in an activity, but the steady
+              development of disciplined, compassionate and capable citizens.
             </p>
           </Reveal>
           <Reveal className="sg-school-collage" delay={0.1}>

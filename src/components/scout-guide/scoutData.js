@@ -1,6 +1,5 @@
 import {
   BadgeCheck,
-  Binoculars,
   BrainCircuit,
   Coins,
   Compass,
@@ -8,8 +7,8 @@ import {
   Flag,
   Handshake,
   HandHeart,
-  HeartHandshake,
   Heart,
+  HeartHandshake,
   Leaf,
   Map,
   Mountain,
@@ -22,126 +21,117 @@ import {
   Waypoints,
 } from "lucide-react";
 
-export const SCOUT_IMAGE_COUNT = 50;
-
-export const getScoutImage = (number, extension = "png") =>
-  encodeURI(`/Scout Guide pic/ScoutGuide${number}.${extension}`);
-
-export const getScoutImageCandidates = (number) => [
-  getScoutImage(number, "png"),
-  getScoutImage(number, "jpg"),
-  getScoutImage(number, "jpeg"),
-  getScoutImage(number, "JPG"),
-  getScoutImage(number, "JPEG"),
+const hsgaImages = [
+  "HSGA_Hero_FlagCeremony.png",
+  "HSGA_Hero_AwardStage.png",
+  "HSGA_Community_TreePlantation.png",
+  "HSGA_Drill_ParadeFormation.png",
+  "HSGA_FirstAid_RescueTraining.png",
+  "HSGA_CubBulbul_Certificates.png",
+  "HSGA_PatrolSystem_MapPlanning.png",
+  "HSGA_RoverRanger_LeadershipAward.png",
+  "HSGA_Promise_PatrioticPledge.png",
+  "HSGA_Award_GroupPortrait.png",
 ];
 
-export const galleryImages = Array.from(
-  { length: SCOUT_IMAGE_COUNT },
-  (_, index) => ({
-    id: index + 1,
-    candidates: getScoutImageCandidates(index + 1),
-    alt: `Scout and Guide learning moment ${index + 1} at Shree Ram Public School`,
-  }),
-);
+export const SCOUT_IMAGE_COUNT = hsgaImages.length;
+export const getScoutImage = (number) =>
+  encodeURI(`/Scout Guide pic/${hsgaImages[(number - 1) % hsgaImages.length]}`);
+export const getScoutImageCandidates = (number) => [getScoutImage(number)];
+export const galleryImages = hsgaImages.map((_, index) => ({
+  id: index + 1,
+  candidates: getScoutImageCandidates(index + 1),
+  alt: `Hindustan Scouts and Guides activity ${index + 1} at Shree Ram Public School`,
+}));
 
 export const heroSlides = [
   {
-    id: "mountain-campfire",
-    candidates: [
-      encodeURI("/Scout Guide pic/Scouts Around a Mountain Campfire.png"),
-    ],
-    alt: "Scouts gathered around a mountain campfire",
+    id: "flag-ceremony",
+    candidates: [getScoutImage(1)],
+    alt: "Hindustan Scouts and Guides taking part in a flag ceremony",
   },
   {
-    id: "mountain-campfire-one",
-    candidates: [
-      encodeURI("/Scout Guide pic/Scouts Around a Mountain Campfire1.png"),
-    ],
-    alt: "Scouts sharing an outdoor campfire experience in the mountains",
+    id: "award-stage",
+    candidates: [getScoutImage(2)],
+    alt: "Hindustan Scouts and Guides receiving awards on stage",
   },
   {
-    id: "planting-hope-together",
-    candidates: [
-      encodeURI("/Scout Guide pic/Scouts Planting Hope Together.png"),
-    ],
-    alt: "Scouts planting hope together through environmental service",
+    id: "tree-plantation",
+    candidates: [getScoutImage(3)],
+    alt: "Hindustan Scouts and Guides participating in tree plantation",
   },
   {
-    id: "saluting-beneath-indian-flag",
-    candidates: [
-      encodeURI("/Scout Guide pic/Scouts Saluting Beneath the Indian Flag.png"),
-    ],
-    alt: "Scouts saluting beneath the Indian flag during a patriotic ceremony",
+    id: "drill-parade",
+    candidates: [getScoutImage(4)],
+    alt: "Hindustan Scouts and Guides in drill and parade formation",
   },
   {
-    id: "indian-scout-parade-sunrise",
-    candidates: [
-      encodeURI("/Scout Guide pic/Indian Scout Parade at Sunrise.png"),
-    ],
-    alt: "Indian Scouts participating in a parade at sunrise",
+    id: "promise-pledge",
+    candidates: [getScoutImage(9)],
+    alt: "Hindustan Scouts and Guides observing the promise and patriotic pledge",
   },
 ];
 
 export const aims = [
-  {
-    title: "Character Building",
-    text: "Integrity, discipline and responsibility.",
-    icon: ShieldCheck,
-    imageId: 14,
-  },
-  {
-    title: "Leadership",
-    text: "Learning to lead while respecting and supporting others.",
-    icon: Flag,
-    imageId: 13,
-  },
-  {
-    title: "Service",
-    text: "Building a lifelong habit of helping people and communities.",
-    icon: HandHeart,
-    imageId: 9,
-  },
-  {
-    title: "Self-Reliance",
-    text: "Developing practical skills, confidence and problem-solving ability.",
-    icon: Compass,
-    imageId: 42,
-  },
-  {
-    title: "Teamwork",
-    text: "Working through patrols and learning cooperation.",
-    icon: Users,
-    imageId: 8,
-  },
-  {
-    title: "Responsible Citizenship",
-    text: "Understanding duties towards society, country and environment.",
-    icon: BadgeCheck,
-    imageId: 49,
-  },
-];
+  [
+    "Character Building",
+    "Integrity, discipline and responsibility through progressive training.",
+    ShieldCheck,
+    9,
+  ],
+  [
+    "Leadership",
+    "Learning to lead through patrol work, service and cooperation.",
+    Flag,
+    8,
+  ],
+  [
+    "Service",
+    "Building a habit of good turns, social service and community development.",
+    HandHeart,
+    3,
+  ],
+  [
+    "Self-Reliance",
+    "Developing practical, vocational and outdoor skills with confidence.",
+    Compass,
+    7,
+  ],
+  [
+    "Teamwork",
+    "Working through patrols, teams and shared responsibilities.",
+    Users,
+    7,
+  ],
+  [
+    "Responsible Citizenship",
+    "Understanding duty to country, society, nature and fellow citizens.",
+    BadgeCheck,
+    10,
+  ],
+].map(([title, text, icon, imageId]) => ({ title, text, icon, imageId }));
 
 export const principles = [
   {
     number: "01",
     title: "Duty to God / Dharma",
-    text: "Living by personal values, spiritual principles and moral responsibility, with respect for every belief.",
+    text: "Respecting God or Dharma, personal conviction and all-faith understanding.",
     icon: Sparkles,
-    imageId: 12,
+    imageId: 9,
   },
   {
     number: "02",
     title: "Duty to Others",
-    text: "Serving country and community while promoting peace, cooperation, human dignity and care for nature.",
+    text: "Helping other people, serving the country and caring for the community and nature.",
     icon: HeartHandshake,
-    imageId: 15,
+    imageId: 3,
   },
   {
     number: "03",
     title: "Duty to Self",
-    text: "Taking responsibility for personal growth, discipline, knowledge, wellbeing and good judgement.",
+    text: "Building discipline, wellbeing, knowledge, self-reliance and good judgement.",
     icon: PersonStanding,
-    imageId: 17,
+    imageId: 7,
   },
 ];
 
@@ -149,81 +139,81 @@ export const historyEvents = [
   {
     year: "1907",
     title: "The movement begins",
-    text: "Lord Robert Baden-Powell conducted an experimental camp on Brownsea Island in England, helping begin the modern Scout Movement.",
+    text: "Lord Robert Baden-Powell's 1907 experimental camp at Brownsea Island helped begin the modern Scout Movement.",
   },
   {
     year: "1909",
-    title: "Scouting comes to India",
-    text: "Captain T. H. Baker established an early Scout troop in Bangalore, marking the organised beginning of Scouting in India.",
+    title: "Scouting reaches India",
+    text: "Scouting came to India in 1909 and Guiding followed in 1913; early organisations did not initially open their doors equally to Indian children.",
   },
   {
     year: "1910",
-    title: "Guiding takes shape",
-    text: "The movement for girls developed as Scouting grew, supported by Agnes Baden-Powell.",
+    title: "Guiding begins",
+    text: "Girl Scouting began in 1910 under Agnes Baden-Powell; it later developed as Girl Guiding under Olave Baden-Powell.",
   },
   {
-    year: "1911",
-    title: "An early Guide Company",
-    text: "One of India's first Guide Companies was established at Jabalpur.",
+    year: "1928",
+    title: "Hindustan Scout Association",
+    text: "Indian groups came together under the Hindustan Scout Association, with Pt. Shri Ram Bajpai as its first National Organising Commissioner.",
   },
   {
     year: "Indian movement",
-    title: "A movement for Indian youth",
-    text: "Leaders including Pandit Madan Mohan Malaviya, Dr. H. N. Kunzru, Pandit Sri Ram Bajpai, Dr. Tara Chand and Maulana Abul Kalam Azad helped broaden and unify the movement.",
+    title: "A distinctly Indian movement",
+    text: "The Association's history records the contribution of leaders including Pt. Madan Mohan Malaviya, Dr. H. N. Kunzru and Pt. Shri Ram Bajpai to Indian Scouting.",
   },
   {
-    year: "7 Nov 1950",
-    title: "The Bharat Scouts and Guides",
-    text: "Different Scout associations were unified under the name The Bharat Scouts and Guides.",
+    year: "Present structure",
+    title: "Hindustan Scouts & Guides Association",
+    text: "The Association operates across India as a registered, non-political, non-sectarian, non-communal and non-profit educational organisation.",
   },
   {
-    year: "15 Aug 1951",
-    title: "Guides join the unified organisation",
-    text: "The Girl Guides Association formally joined The Bharat Scouts and Guides.",
+    year: "Membership",
+    title: "Open to people and institutions",
+    text: "Membership includes Cubs/Bulbuls, Scouts/Guides, Rovers/Rangers, adult members and institutional members such as schools and colleges.",
   },
   {
     year: "Today",
-    title: "Prepared for tomorrow",
-    text: "BSG continues as India's national Scout and Guide movement, fostering character, citizenship, leadership, service and youth development.",
+    title: "Training, service and citizenship",
+    text: "Hindustan Scouts & Guides continues to promote community development, social service, adventure, conservation, national integration, discipline and leadership.",
   },
 ];
 
 export const ageGroups = [
   {
     step: "01",
-    title: "Bunnies",
-    age: "3–5 years",
-    motto: "Keep Smiling",
-    text: "Joy, social development, basic habits and group participation.",
+    title: "Cubs & Bulbuls",
+    age: "+5 to 11 years",
+    motto: "Do Your Best",
+    text: "Good habits, teamwork, creativity, outdoor learning and a first experience of the Scout/Guide Promise and Law.",
     icon: Sparkles,
-    imageId: 30,
+    imageId: 6,
   },
   {
     step: "02",
-    title: "Cubs & Bulbuls",
-    age: "5+–10 years",
-    motto: "Do Your Best",
-    text: "Good habits, teamwork, creativity, outdoor learning and responsibility.",
+    title: "Scouts & Guides",
+    age: "+11 to 16 years",
+    motto: "Be Prepared",
+    text: "Progressive training in patrol work, first aid, knots, pioneering, camping, service, yoga and responsible citizenship.",
     icon: Users,
-    imageId: 29,
+    imageId: 4,
   },
   {
     step: "03",
-    title: "Scouts & Guides",
-    age: "10+–17 years",
-    motto: "Be Prepared",
-    text: "Leadership, outdoor activities, service, practical skills, discipline and self-reliance.",
+    title: "Rovers & Rangers",
+    age: "+16 to 25 years",
+    motto: "Service",
+    text: "Advanced leadership, community service, vocational interests, responsibility and active citizenship.",
     icon: Compass,
-    imageId: 31,
+    imageId: 8,
   },
   {
     step: "04",
-    title: "Rovers & Rangers",
-    age: "15+–25 years",
-    motto: "Service",
-    text: "Leadership, advanced community service, responsibility and active citizenship.",
+    title: "Adult leadership",
+    age: "Unit and association service",
+    motto: "Guide by service",
+    text: "Scouters, Guiders and trainers support units, camps, test-card progression and the Association's service programme.",
     icon: HandHeart,
-    imageId: 32,
+    imageId: 2,
   },
 ];
 
@@ -238,168 +228,160 @@ export const methods = [
   ["Personal Development", Sparkles],
 ];
 
-export const lawValues = [
-  "Trustworthiness",
-  "Loyalty",
-  "Friendship",
-  "Courtesy",
-  "Love for nature",
-  "Discipline",
-  "Courage",
-  "Thrift",
-  "Purity of thought, word and deed",
+const valueDefinitions = [
+  [
+    "Trustworthiness",
+    "Being honest, reliable and dependable in every situation.",
+    9,
+    ShieldCheck,
+  ],
+  [
+    "Loyalty",
+    "Being loyal to family, friends, school, society and the nation.",
+    7,
+    Handshake,
+  ],
+  [
+    "Friendship",
+    "Building genuine friendship, cooperation and care for others.",
+    7,
+    Users,
+  ],
+  [
+    "Courtesy",
+    "Being polite, respectful and considerate towards everyone.",
+    3,
+    Heart,
+  ],
+  [
+    "Love for Nature",
+    "Respecting, protecting and caring for the natural world.",
+    3,
+    Leaf,
+  ],
+  [
+    "Discipline",
+    "Following rules, maintaining self-control and doing what is right.",
+    4,
+    BadgeCheck,
+  ],
+  [
+    "Courage",
+    "Facing challenges with confidence, determination and responsibility.",
+    4,
+    Mountain,
+  ],
+  [
+    "Thrift",
+    "Using time, money and resources wisely while avoiding waste.",
+    7,
+    Coins,
+  ],
+  [
+    "Purity of Thought, Word and Deed",
+    "Keeping thoughts, words and actions kind, clean and positive.",
+    8,
+    Sparkles,
+  ],
 ];
 
-export const scoutValues = [
-  {
-    number: "01",
-    title: "Trustworthiness",
-    description: "Being honest, reliable and dependable in every situation.",
-    image: "/Scout Guide pic/01_Trustworthiness.jpg",
-    alt: "Scout demonstrating trustworthiness and responsibility",
-    icon: ShieldCheck,
-  },
-  {
-    number: "02",
-    title: "Loyalty",
-    description:
-      "Being loyal to family, friends, school, society and the nation.",
-    image: "/Scout Guide pic/02_Loyalty.jpg",
-    alt: "Scouts learning teamwork and loyalty",
-    icon: Handshake,
-  },
-  {
-    number: "03",
-    title: "Friendship",
-    description:
-      "Building genuine friendship, cooperation and care for others.",
-    image: "/Scout Guide pic/03_Friendship.jpg",
-    alt: "Scouts sharing friendship and cooperation",
-    icon: Users,
-  },
-  {
-    number: "04",
-    title: "Courtesy",
-    description: "Being polite, respectful and considerate towards everyone.",
-    image: "/Scout Guide pic/04_Courtesy.jpg",
-    alt: "Scout showing courtesy and respect",
-    icon: Heart,
-  },
-  {
-    number: "05",
-    title: "Love for Nature",
-    description: "Respecting, protecting and caring for the natural world.",
-    image: "/Scout Guide pic/05_LoveForNature.jpg",
-    alt: "Students participating in environmental care activity",
-    icon: Leaf,
-  },
-  {
-    number: "06",
-    title: "Discipline",
-    description:
-      "Following rules, maintaining self-control and doing what is right.",
-    image: "/Scout Guide pic/06_Discipline.jpg",
-    alt: "Scouts practising discipline and responsibility",
-    icon: BadgeCheck,
-  },
-  {
-    number: "07",
-    title: "Courage",
-    description:
-      "Facing challenges with confidence, determination and responsibility.",
-    image: "/Scout Guide pic/07_Courage.jpg",
-    alt: "Scout facing a challenge with courage",
-    icon: Mountain,
-  },
-  {
-    number: "08",
-    title: "Thrift",
-    description: "Using time, money and resources wisely while avoiding waste.",
-    image: "/Scout Guide pic/08_Thrift.jpg",
-    alt: "Scout learning to use resources wisely",
-    icon: Coins,
-  },
-  {
-    number: "09",
-    title: "Purity of Thought, Word and Deed",
-    description:
-      "Keeping thoughts, words and actions kind, clean and positive.",
-    image: "/Scout Guide pic/09_PurityOfThoughtWordAndDeed.jpg",
-    alt: "Scout values represented through kind and positive actions",
-    icon: Sparkles,
-  },
+const scoutValueImages = [
+  "ScoutValue01_Trustworthiness.png",
+  "ScoutValue02_Loyalty.png",
+  "ScoutValue03_Friendship.png",
+  "ScoutValue04_Courtesy.png",
+  "ScoutValue05_LoveForNature.png",
+  "ScoutValue06_Discipline.png",
+  "ScoutValue07_Courage.png",
+  "ScoutValue08_Thrift.png",
+  "ScoutValue09_PurityThoughtWordDeed.png",
 ];
+
+export const scoutValues = valueDefinitions.map(
+  ([title, description, , icon], index) => ({
+    number: String(index + 1).padStart(2, "0"),
+    title,
+    description,
+    image: encodeURI(`/Scout Guide pic/${scoutValueImages[index]}`),
+    alt: `${title} in Hindustan Scouts and Guides`,
+    icon,
+  }),
+);
 
 export const skills = [
   [
     "First Aid",
     "Emergency preparedness and responsible response.",
     HandHeart,
-    18,
+    "/Scout Guide pic/ScoutSkill01_FirstAid.png",
   ],
   [
     "Knots",
     "Rope work, practical technique and problem solving.",
     Waypoints,
-    19,
+    "/Scout Guide pic/ScoutSkill02_Knots.png",
   ],
   [
     "Pioneering",
     "Structures, engineering skills and team activity.",
     Waypoints,
-    20,
+    "/Scout Guide pic/ScoutSkill03_Pioneering.png",
   ],
   [
     "Map Reading",
     "Direction, observation, map reading and route planning.",
     Map,
-    21,
+    "/Scout Guide pic/ScoutSkill04_MapReading.png",
   ],
   [
     "Hiking",
     "Endurance, exploration and appreciation of nature.",
     Mountain,
-    22,
+    "/Scout Guide pic/ScoutSkill05_Hiking.png",
   ],
-  ["Trekking", "Adventure, resilience and outdoor education.", Mountain, 23],
+  [
+    "Trekking",
+    "Adventure, resilience and outdoor education.",
+    Mountain,
+    "/Scout Guide pic/ScoutSkill06_Trekking.png",
+  ],
   [
     "Camp Cooking",
     "Basic camp cooking and independent living skills.",
     CookingPot,
-    24,
+    "/Scout Guide pic/ScoutSkill07_CampCooking.png",
   ],
   [
     "Shelter Making",
     "Resourcefulness and outdoor survival fundamentals.",
     TentTree,
-    25,
+    "/Scout Guide pic/ScoutSkill08_ShelterMaking.png",
   ],
-  ["Signalling", "Clear communication and coordination skills.", Flag, 26],
+  [
+    "Signalling",
+    "Clear communication and coordination skills.",
+    Flag,
+    "/Scout Guide pic/ScoutSkill09_Signalling.png",
+  ],
   [
     "Life Skills / Compass",
     "Navigation, observation and self-reliance.",
     Compass,
-    42,
-  ],
-  [
-    "Rescue",
-    "Emergency response, awareness and community support.",
-    ShieldCheck,
-    43,
+    "/Scout Guide pic/ScoutSkill10_LifeSkills_Compass.png",
   ],
 ];
 
 export const activities = [
-  ["Flag Ceremony", 37],
-  ["March Past", 3],
-  ["Drill", 27],
-  ["Camping", 6],
-  ["Campfire", 7],
-  ["Team Games", 40],
-  ["Cultural Programme", 38],
-  ["National Integration", 39],
-  ["Patrol System", 28],
-  ["Indoor Training", 41],
+  ["Flag Ceremony", 1],
+  ["March Past", 4],
+  ["Drill", 4],
+  ["Camping", 4],
+  ["Campfire", 2],
+  ["Team Games", 7],
+  ["Cultural Programme", 10],
+  ["National Integration", 9],
+  ["Patrol System", 7],
+  ["Indoor Training", 4],
 ];
 
 export const outcomes = [
@@ -423,45 +405,34 @@ export const valueCounters = [
   "Leadership",
   "Adventure",
 ];
-
-export const storyImageIds = [2, 5, 7, 13, 18, 20, 23, 34, 37, 39, 45, 46];
-
+export const storyImageIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 export const serviceStories = [
   [
     "Community Service",
     "Putting care into action for people and places we share.",
-    15,
+    3,
   ],
   [
     "Tree Plantation",
     "Growing a practical sense of responsibility for nature.",
-    16,
+    3,
   ],
-  [
-    "Environment",
-    "Choosing habits that protect a cleaner, greener future.",
-    17,
-  ],
+  ["Environment", "Choosing habits that protect a cleaner, greener future.", 3],
   [
     "Social Awareness",
     "Speaking up for thoughtful, responsible citizenship.",
-    44,
+    10,
   ],
-  [
-    "Cleanliness Drive",
-    "Working together to make shared spaces healthier.",
-    45,
-  ],
+  ["Cleanliness Drive", "Working together to make shared spaces healthier.", 3],
   [
     "Community Outreach",
     "Meeting service with respect, presence and kindness.",
-    46,
+    10,
   ],
   [
     "Empathy & Care",
     "Learning that service begins with noticing another person.",
-    47,
+    8,
   ],
 ];
-
-export const adventureImageIds = [10, 22, 23, 33, 34, 35, 36];
+export const adventureImageIds = [4, 7, 3, 8];

@@ -92,7 +92,7 @@ export default function ScoutHero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
         >
-          Shree Ram Public School
+          Hindustan Scouts &amp; Guides Association at Shree Ram Public School
         </Motion.p>
         <Motion.h1
           initial={{ opacity: 0, y: 28 }}
@@ -107,14 +107,14 @@ export default function ScoutHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          {active?.id === 3
+          {active?.id === "tree-plantation"
             ? "Discipline Builds Character"
-            : active?.id === 5
-              ? "Adventure Begins Beyond the Classroom"
-              : active?.id === 9
-                ? "Service Before Self"
-                : active?.id === 10
-                  ? "Learning Through Nature"
+            : active?.id === "drill-parade"
+              ? "Discipline in Formation"
+              : active?.id === "award-stage"
+                ? "Recognition for Service"
+                : active?.id === "promise-pledge"
+                  ? "Promise. Duty. Country."
                   : "Be Prepared. Lead. Serve. Inspire."}
         </Motion.h2>
         <Motion.p
@@ -124,14 +124,14 @@ export default function ScoutHero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.48 }}
         >
-          {active?.id === 3
+          {active?.id === "tree-plantation"
             ? "Confidence begins with responsibility."
-            : active?.id === 5
-              ? "Explore. Learn. Grow."
-              : active?.id === 9
-                ? "Small actions can create meaningful change."
-                : active?.id === 10
-                  ? "Developing courage, resilience and self-reliance."
+            : active?.id === "drill-parade"
+              ? "Training that builds focus and teamwork."
+              : active?.id === "award-stage"
+                ? "Celebrating achievement and commitment."
+                : active?.id === "promise-pledge"
+                  ? "Living the values of Hindustan Scouts & Guides."
                   : "Through discipline, teamwork, service and outdoor learning, students grow into self-reliant leaders and responsible citizens."}
         </Motion.p>
         <Motion.div

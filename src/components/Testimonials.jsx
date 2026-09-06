@@ -8,21 +8,21 @@ const testimonials = [
     role: "Parent",
     content:
       "Choosing Shree Ram Public School was the best decision we made for our son. The personalized attention he receives has helped him thrive both academically and socially. We’re so grateful for the caring teachers and staff!",
-    image: "/public/testimonialsImg/MEENAKSHI.png",
+    image: "/testimonialsImg/MEENAKSHI.png",
   },
   {
     name: "Mrs. Manju Sangwan",
     role: "Parent",
     content:
       "The school provides an excellent environment for holistic development. My son has become more confident and loves going to school every day.",
-    image: "/public/testimonialsImg/Manju_Sangwan_.jpg",
+    image: "/testimonialsImg/Manju_Sangwan_.jpg",
   },
   {
     name: "Mrs. Shiwani",
     role: "Student (Class X)",
     content:
       "I have been here since nursery. The teachers are very supportive and the facilities are top-notch. I feel prepared for my future.",
-    image: "/public/testimonialsImg/Shiwani.jpg",
+    image: "/testimonialsImg/Shiwani.jpg",
   },
 ];
 
@@ -58,7 +58,7 @@ const Testimonials = () => {
               <img
                 src={testimonials[current].image}
                 alt={testimonials[current].name}
-                className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
+                className="w-24 h-28 rounded-xl mx-auto mb-4 object-cover object-top"
               />
               <p className="text-gray-700 italic mb-4">
                 "{testimonials[current].content}"
